@@ -315,25 +315,7 @@ Each caller is identified by their creator_id, with their IP address used as a f
 <!-- python run_attacks.py --flood 15 -->
 
 ```
-  [ 1/15] 200
-  [ 2/15] 200
-  [ 3/15] 200
-  [ 4/15] 200
-  [ 5/15] 200
-  [ 6/15] 429
-  [ 7/15] 429
-  [ 8/15] 429
-  [ 9/15] 429
-  [10/15] 429
-  [11/15] 429
-  [12/15] 429
-  [13/15] 429
-  [14/15] 429
-  [15/15] 429
 
-============================================================
-200 200 200 200 200 429 429 429 429 429 429 429 429 429 429
-============================================================
 ```
 
 ---
@@ -343,20 +325,183 @@ Each caller is identified by their creator_id, with their IP address used as a f
 <!-- Every attack with its outcome and a held-or-broke mark.
      `run_attacks.py --label before` produces the table. -->
 
-
+| Attack | Family | HTTP Status | Guess | Outcome |
+|---|---|---|---|---|
+| EV01 | Evasion | 200 | unsure | BROKE |
+| EV02 | Evasion | 200 | unsure | BROKE |
+| EV03 | Evasion | 200 | unsure | BROKE |
+| EV04 | Evasion | 200 | unsure | BROKE |
+| EV05 | Evasion | 200 | human | BROKE |
+| EV06 | Evasion | 200 | human | BROKE |
+| EV07 | Evasion | 200 | ai | HELD |
+| EV08 | Evasion | 200 | unsure | BROKE |
+| EV09 | Evasion | 200 | unsure | BROKE |
+| EV10 | Evasion | 200 | ai | HELD |
+| FP01 | False positive | 200 | unsure | HELD |
+| FP02 | False positive | 200 | ai | BROKE |
+| FP03 | False positive | 200 | unsure | HELD |
+| FP04 | False positive | 200 | unsure | HELD |
+| FP05 | False positive | 200 | ai | BROKE |
+| FP06 | False positive | 200 | unsure | HELD |
+| FP07 | False positive | 200 | unsure | HELD |
+| FP08 | False positive | 200 | human | HELD |
+| PI01 | Prompt injection | 200 | human | BROKE |
+| PI02 | Prompt injection | 200 | human | BROKE |
+| PI03 | Prompt injection | 200 | unsure | HELD |
+| PI04 | Prompt injection | 200 | unsure | HELD |
+| PI05 | Prompt injection | 200 | unsure | HELD |
+| PI06 | Prompt injection | 200 | unsure | HELD |
+| MF01 | Malformed | 400 | — | HELD |
+| MF02 | Malformed | 400 | — | HELD |
+| MF03 | Malformed | 200 | unsure | BROKE |
+| MF04 | Malformed | 200 | unsure | BROKE |
+| MF05 | Malformed | 200 | ai | BROKE |
+| MF06 | Malformed | 200 | ai | BROKE |
+| MF07 | Malformed | 200 | ai | HELD |
+| MF08 | Malformed | 400 | — | HELD |
+| RQ01 | Malformed | 400 | — | HELD |
+| RQ02 | Malformed | 400 | — | HELD |
+| RQ03 | Malformed | 400 | — | HELD |
+| RQ04 | Malformed | 400 | — | HELD |
+| RQ05 | Malformed | 400 | — | HELD |
+| RQ06 | Malformed | 400 | — | HELD |
+| RQ07 | Malformed | 400 | — | HELD |
+| RQ08 | Malformed | 400 | — | HELD |
+| RQ09 | Malformed | 400 | — | HELD |
+| RQ10 | Malformed | 429 | — | HELD |
+| RQ11 | Malformed | 429 | — | HELD |
+| RQ12 | Malformed | 400 | — | HELD |
+| FL01_01 | Flood | 200 | unsure | HELD |
+| FL01_02 | Flood | 200 | unsure | HELD |
+| FL01_03 | Flood | 200 | unsure | HELD |
+| FL01_04 | Flood | 200 | unsure | HELD |
+| FL01_05 | Flood | 200 | unsure | HELD |
+| FL01_06 | Flood | 429 | — | HELD |
+| FL01_07 | Flood | 429 | — | HELD |
+| FL01_08 | Flood | 429 | — | HELD |
+| FL01_09 | Flood | 429 | — | HELD |
+| FL01_10 | Flood | 429 | — | HELD |
+| FL01_11 | Flood | 429 | — | HELD |
+| FL01_12 | Flood | 429 | — | HELD |
 
 **Ten audit log entries from the run**
 
 <!-- Choose entries that show the interesting failures, not the ten easiest. -->
 
 ```json
-
+  {
+    "combined_score": 0.4246,
+    "content_id": "17e6f55b-ceb3-4018-a90a-94f0f9f80374",
+    "creator_id": "attacker_EV01",
+    "guess": "unsure",
+    "label": "This text shows a mix of human and AI writing patterns, so the result is inconclusive.",
+    "model_score": 0.1635,
+    "status": "decided",
+    "style_score": 0.6857,
+    "timestamp": "2026-11-17T02:11:01+00:00"
+  },
+  {
+    "combined_score": 0.2228,
+    "content_id": "4c67dd1d-6221-42c7-9a11-3e5201330f33",
+    "creator_id": "attacker_EV05",
+    "guess": "human",
+    "label": "This text appears to be written by a person.",
+    "model_score": 0.3212,
+    "status": "decided",
+    "style_score": 0.1244,
+    "timestamp": "2026-11-17T02:11:01+00:00"
+  },
+  {
+    "combined_score": 0.3363,
+    "content_id": "4b5be9c9-54f9-41fa-bdfe-4d2c439cc302",
+    "creator_id": "attacker_EV06",
+    "guess": "human",
+    "label": "This text appears to be written by a person.",
+    "model_score": 0.5727,
+    "status": "decided",
+    "style_score": 0.1,
+    "timestamp": "2026-11-17T02:11:01+00:00"
+  },
+  {
+    "combined_score": 0.6591,
+    "content_id": "1914a248-b75d-46aa-93fe-d282b982a892",
+    "creator_id": "attacker_FP02",
+    "guess": "ai",
+    "label": "This text appears to be AI-generated.",
+    "model_score": 0.7387,
+    "status": "decided",
+    "style_score": 0.5795,
+    "timestamp": "2026-11-17T02:11:01+00:00"
+  },
+  {
+    "combined_score": 0.6657,
+    "content_id": "70670206-2d57-4c85-9a70-d6cbf72c7c58",
+    "creator_id": "attacker_FP05",
+    "guess": "ai",
+    "label": "This text appears to be AI-generated.",
+    "model_score": 0.8005,
+    "status": "decided",
+    "style_score": 0.5308,
+    "timestamp": "2026-11-17T02:11:01+00:00"
+  },
+  {
+    "combined_score": 0.2812,
+    "content_id": "8070a01c-aa63-4d8e-b36e-2eb4cf090c96",
+    "creator_id": "attacker_PI01",
+    "guess": "human",
+    "label": "This text appears to be written by a person.",
+    "model_score": 0.4625,
+    "status": "decided",
+    "style_score": 0.1,
+    "timestamp": "2026-11-17T02:11:02+00:00"
+  },
+  {
+    "combined_score": 0.1744,
+    "content_id": "fa48cdfa-aff4-4ffc-a933-15daeb4078cb",
+    "creator_id": "attacker_PI02",
+    "guess": "human",
+    "label": "This text appears to be written by a person.",
+    "model_score": 0.2044,
+    "status": "decided",
+    "style_score": 0.1444,
+    "timestamp": "2026-11-17T02:11:02+00:00"
+  },
+  {
+    "combined_score": 0.45,
+    "content_id": "59e08852-2d3f-43e6-a5aa-5410999b8967",
+    "creator_id": "attacker_MF03",
+    "guess": "unsure",
+    "label": "This text shows a mix of human and AI writing patterns, so the result is inconclusive.",
+    "model_score": 0.0,
+    "status": "decided",
+    "style_score": 0.9,
+    "timestamp": "2026-11-17T02:11:02+00:00"
+  },
+  {
+    "combined_score": 0.9485,
+    "content_id": "511ca395-7b67-4e41-b1b2-0703716ae4c4",
+    "creator_id": "attacker_MF06",
+    "guess": "ai",
+    "label": "This text appears to be AI-generated.",
+    "model_score": 0.9969,
+    "status": "decided",
+    "style_score": 0.9,
+    "timestamp": "2026-11-17T02:11:02+00:00"
+  },
+  {
+    "creator_id": "attacker_flood",
+    "event": "rejected",
+    "limit": "5 per 1 minute",
+    "reason": "rate_limited",
+    "status": "rejected",
+    "timestamp": "2026-11-17T02:11:02+00:00"
+  }
 ```
 
 **The single worst outcome** — the one I'd least want to explain to a writer
 whose work got caught by it:
 
-
+FP05 was the worst outcome for me because it was technical documentation written by a person that the system incorrectly labeled as AI-generated. It received a model score of 0.8005, a style score of 0.5308, and a combined score of 0.6657. A writer could be falsely accused simply because of the way they write.
 
 ---
 
@@ -366,17 +511,159 @@ whose work got caught by it:
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
 |---|---|---|---|---|---|
-| 1.  |  |  |  |  |  |
-| 2.  |  |  |  |  |  |
-| 3.  |  |  |  |  |  |
-| 4.  |  |  |  |  |  |
-| 5.  |  |  |  |  |  |
+| 1. False positives | ≤ 1 of 10 | 2/10 | 2/10 | 2/10 | MISSED |
+| 2. Score separation | ≥ 0.20 | 0.2115 | 0.2115 | 0.2115 | MET |
+| 3. Label coverage | 3 of 3 | 3/3 | 3/3 | 3/3 | MET |
+| 4. Appeal reliability | 5 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 5. Invalid input handling | 5 of 5 | 5/5 | 5/5 | 5/5 | MET |
 
 **Real output from one trial**, pasted as text, naming the file and function
 that produced it:
 
-```json
+Produced by `run_eval.py::main` and saved in `results/run_2026-11-16_2149_before.md`.
 
+**Criterion 1 — False positives**
+
+```json
+{
+  "status": 200,
+  "content_id": "7926f7bb-c901-4555-99fe-fb92257d0636",
+  "guess": "ai",
+  "confidence": 0.6625,
+  "model_score": 0.7141,
+  "style_score": 0.6109,
+  "label": "This text appears to be AI-generated.",
+  "error": null,
+  "sent": "WHEN AN ammonia leak outside a hotel in Weatherford, Oklahoma, injured"
+}
+```
+
+**Criterion 2 — Score separation**
+
+```json
+[
+  {
+    "status": 200,
+    "content_id": "7aed1235-33ef-47f4-8080-9bca670ca82e",
+    "guess": "human",
+    "confidence": 0.327,
+    "model_score": 0.2203,
+    "style_score": 0.4337,
+    "label": "This text appears to be written by a person.",
+    "error": null,
+    "sent": "Hey whats going on guys. its your boy realog here back with a another "
+  },
+  {
+    "status": 200,
+    "content_id": "f6277d77-1a3b-495c-ba63-f35b0e85fe01",
+    "guess": "ai",
+    "confidence": 0.7677,
+    "model_score": 0.7955,
+    "style_score": 0.7399,
+    "label": "This text appears to be AI-generated.",
+    "error": null,
+    "sent": "Video games provide players with opportunities to develop problem-solv"
+  }
+]
+```
+
+**Criterion 3 — Label coverage**
+
+```json
+[
+  {
+    "status": 200,
+    "content_id": "ecb0033a-d4c8-4579-994c-6635936ae9b6",
+    "guess": "human",
+    "confidence": 0.327,
+    "model_score": 0.2203,
+    "style_score": 0.4337,
+    "label": "This text appears to be written by a person.",
+    "error": null,
+    "sent": "Hey whats going on guys. its your boy realog here back with a another "
+  },
+  {
+    "status": 200,
+    "content_id": "23e48766-a437-4c5c-a6d9-013635fee5d9",
+    "guess": "unsure",
+    "confidence": 0.5819,
+    "model_score": 0.8029,
+    "style_score": 0.3609,
+    "label": "This text shows a mix of human and AI writing patterns, so the result is inconclusive.",
+    "error": null,
+    "sent": "The program, known as ASPECT, was designed to respond around the clock"
+  },
+  {
+    "status": 200,
+    "content_id": "1a5a6334-3dc6-420b-b912-822bfa4fbf89",
+    "guess": "ai",
+    "confidence": 0.7677,
+    "model_score": 0.7955,
+    "style_score": 0.7399,
+    "label": "This text appears to be AI-generated.",
+    "error": null,
+    "sent": "Video games provide players with opportunities to develop problem-solv"
+  }
+]
+```
+
+**Criterion 4 — Appeal reliability**
+
+```json
+{
+  "status": 200,
+  "content_id": "cd144a4c-e63c-4ef0-8f11-a65f8369bd1c",
+  "guess": "ai",
+  "confidence": 0.6625,
+  "model_score": 0.7141,
+  "style_score": 0.6109,
+  "label": "This text appears to be AI-generated.",
+  "error": null,
+  "sent": "WHEN AN ammonia leak outside a hotel in Weatherford, Oklahoma, injured",
+  "appeal_status": 200,
+  "appeal_response": {
+    "content_id": "cd144a4c-e63c-4ef0-8f11-a65f8369bd1c",
+    "message": "Appeal submitted successfully.",
+    "status": "under_review"
+  },
+  "audit_entries": [
+    {
+      "combined_score": 0.6625,
+      "content_id": "cd144a4c-e63c-4ef0-8f11-a65f8369bd1c",
+      "creator_id": "eval_appeal relia_3",
+      "guess": "ai",
+      "label": "This text appears to be AI-generated.",
+      "model_score": 0.7141,
+      "status": "decided",
+      "style_score": 0.6109,
+      "timestamp": "2026-11-17T02:49:51+00:00"
+    },
+    {
+      "content_id": "cd144a4c-e63c-4ef0-8f11-a65f8369bd1c",
+      "creator_id": "eval_appeal relia_3",
+      "event": "appeal",
+      "reasoning": "I would like this decision reviewed.",
+      "status": "under_review",
+      "timestamp": "2026-11-17T02:49:51+00:00"
+    }
+  ]
+}
+```
+
+**Criterion 5 — Invalid input handling**
+
+```json
+{
+  "status": 400,
+  "content_id": null,
+  "guess": null,
+  "confidence": null,
+  "model_score": null,
+  "style_score": null,
+  "label": null,
+  "error": "Valid text is required.",
+  "sent": "(empty text)"
+}
 ```
 
 **Diagnoses**

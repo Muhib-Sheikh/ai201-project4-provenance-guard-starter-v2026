@@ -67,8 +67,9 @@ def describe(body):
 
 
 def main():
-    parser = argparse.ArgumentParser(description=__doc__,
-                                     formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     parser.add_argument("--trials", type=int, default=3)
     parser.add_argument("--label", default="")
     parser.add_argument("--url", default=DEFAULT_URL)
@@ -78,15 +79,20 @@ def main():
     try:
         import requests
     except ImportError:
-        print("The `requests` package isn't installed.\n"
-              "Run: pip install -r requirements.txt", file=sys.stderr)
+        print(
+            "The `requests` package isn't installed.\n"
+            "Run: pip install -r requirements.txt",
+            file=sys.stderr,
+        )
         sys.exit(1)
 
     try:
         import scenarios
     except ImportError:
-        print("No scenarios.py found. Milestone 3 starts by filling it in.",
-              file=sys.stderr)
+        print(
+            "No scenarios.py found. Milestone 3 starts by filling it in.",
+            file=sys.stderr,
+        )
         sys.exit(1)
 
     problems = scenarios.validate()
@@ -99,8 +105,10 @@ def main():
     try:
         requests.get(f"{args.url}/health", timeout=5)
     except Exception:  # noqa: BLE001
-        print(f"Nothing answering at {args.url}. Start it:  python app.py",
-              file=sys.stderr)
+        print(
+            f"Nothing answering at {args.url}. Start it:  python app.py",
+            file=sys.stderr,
+        )
         sys.exit(1)
 
     if args.trials < 3:
@@ -116,21 +124,58 @@ def main():
             for i, body in enumerate(bodies_for(scenario), 1):
                 preview = describe(body)
                 try:
-                    response = requests.post(f"{args.url}/submit", json=body,
-                                             timeout=args.timeout)
+                    response = requests.post(
+                        f"{args.url}/submit", json=body, timeout=args.timeout
+                    )
                     payload = response.json() if response.content else {}
-                    results.append({
+
+                    result = {
                         "status": response.status_code,
+                        "content_id": payload.get("content_id"),
                         "guess": payload.get("guess"),
                         "confidence": payload.get("confidence"),
                         "model_score": payload.get("model_score"),
                         "style_score": payload.get("style_score"),
                         "label": payload.get("label"),
+                        "error": payload.get("error"),
                         "sent": preview,
-                    })
+                    }
+
+                    if scenario.get("appeal") and response.status_code == 200:
+                        content_id = payload["content_id"]
+
+                        appeal_response = requests.post(
+                            f"{args.url}/appeal",
+                            json={
+                                "content_id": content_id,
+                                "reasoning": "I would like this decision reviewed.",
+                            },
+                            timeout=args.timeout,
+                        )
+
+                        log_response = requests.get(
+                            f"{args.url}/log",
+                            timeout=args.timeout,
+                        )
+
+                        result["appeal_status"] = appeal_response.status_code
+                        result["appeal_response"] = appeal_response.json()
+                        result["audit_entries"] = [
+                            entry
+                            for entry in log_response.json()["entries"]
+                            if entry.get("content_id") == content_id
+                        ]
+
+                    results.append(result)
+
                 except Exception as exc:  # noqa: BLE001
-                    results.append({"status": None, "error": f"{type(exc).__name__}: {exc}",
-                                    "sent": preview})
+                    results.append(
+                        {
+                            "status": None,
+                            "error": f"{type(exc).__name__}: {exc}",
+                            "sent": preview,
+                        }
+                    )
 
             trials.append(results)
             guesses = [r.get("guess") or "—" for r in results]
@@ -171,16 +216,29 @@ def write_report(rows, args):
         name = f"{number}. {scenario['name']}" if number else scenario["name"]
         lines.append(f"| {name} |  | {' | '.join([' '] * n)} |  |")
 
-    lines += ["", "---", "", "## What actually came back", "",
-              "Real output. Paste the relevant parts into your README — the rubric",
-              "asks for the actual JSON, not a description of it.", ""]
+    lines += [
+        "",
+        "---",
+        "",
+        "## What actually came back",
+        "",
+        "Real output. Paste the relevant parts into your README — the rubric",
+        "asks for the actual JSON, not a description of it.",
+        "",
+    ]
 
     for row in rows:
         scenario = row["scenario"]
         lines += [f"### {scenario['name']}", ""]
         for trial_number, results in enumerate(row["trials"], 1):
-            lines += [f"**Trial {trial_number}**", "", "```json",
-                      json.dumps(results, indent=2), "```", ""]
+            lines += [
+                f"**Trial {trial_number}**",
+                "",
+                "```json",
+                json.dumps(results, indent=2),
+                "```",
+                "",
+            ]
 
     path.write_text("\n".join(lines), encoding="utf-8")
     print(f"\nWrote {path.relative_to(config.ROOT)}")
