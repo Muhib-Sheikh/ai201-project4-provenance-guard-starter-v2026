@@ -149,8 +149,8 @@ A simple, repetitive writing sample had a model score of 0.8342 but a style scor
 | Label | Score range | The exact text a reader sees |
 |---|---|---|
 | high-confidence human | 0.00–0.35 | This text appears to be written by a person. |
-| unsure | Above 0.35, below 0.65 | This text shows a mix of human and AI writing patterns, so the result is inconclusive. |
-| high-confidence AI | 0.65–1.00 | This text appears to be AI-generated. |
+| unsure | Above 0.35, below 0.75 | This text shows a mix of human and AI writing patterns, so the result is inconclusive. |
+| high-confidence AI | 0.75–1.00 | This text appears to be AI-generated. |
 
 **Why I worded the "unsure" one this way:**
 <!-- It's the hardest of the three. It has to admit uncertainty without
@@ -288,6 +288,17 @@ curl "http://127.0.0.1:5000/log?limit=5"
 - **What came back:** The first suggestions were too vague and included unnecessary disclaimers. We also discussed how to communicate uncertainty without making an accusation.
 - **What I changed:** I simplified the human and AI labels and chose an unsure label that explains the writing shows a mix of human and AI patterns.
 
+**Moment 3**
+
+- **What I asked for:** I asked ChatGPT to help analyze the failed attacks and figure out why they got through.
+- **What came back:** It identified which stages contributed to each failure based on the individual signal scores and the implementation.
+- **What I changed:** I grouped the failures by their underlying causes and focused on the limitations of the signals rather than treating every attack as a separate issue.
+
+**Moment 4**
+
+- **What I asked for:** I asked ChatGPT to help determine which improvement would be most beneficial based on my diagnoses.
+- **What came back:** It compared reweighting the signals, raising the AI threshold, and improving input validation, along with their trade-offs.
+- **What I changed:** I decided to raise the AI threshold from 0.65 to 0.75 and reran both evaluations to see whether it reduced false positives.
 <!-- ═══════════════════════ UNIT 8 — THE TEST ═══════════════════════ -->
 
 ---
@@ -315,7 +326,7 @@ Each caller is identified by their creator_id, with their IP address used as a f
 <!-- python run_attacks.py --flood 15 -->
 
 ```
-
+200 200 200 200 200 429 429 429 429 429 429 429 429 429 429
 ```
 
 ---
@@ -785,6 +796,16 @@ The false positive criterion and attacks FP02 and FP05 showed that human writing
 | FL01_11 | flood_same_creator | 429 | — | HELD |
 | FL01_12 | flood_same_creator | 429 | — | HELD |
 
+**Acceptance criteria — After**
+
+| Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
+|---|---|---|---|---|---|
+| 1. False positives | ≤ 1 of 10 | 0/10 | 0/10 | 0/10 | MET |
+| 2. Score separation | ≥ 0.20 | 0.2115 | 0.2115 | 0.2115 | MET |
+| 3. Label coverage | 3 of 3 | 3/3 | 3/3 | 3/3 | MET |
+| 4. Appeal reliability | 5 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 5. Invalid input handling | 5 of 5 | 5/5 | 5/5 | 5/5 | MET |
+
 **Did it help, and how do I know:**
 
 <!-- Widening the unsure band usually fixes one problem and creates another.
@@ -801,14 +822,20 @@ The system is less likely to falsely accuse human writers, but the trade-off is 
 <!-- For each attack still getting through and each criterion still missed:
      what you'd do, and why you stopped. -->
 
+All five criteria are now met, but 15 of the 56 attacks still get through.
 
+- **Evasion (EV01–EV06, EV08–EV10):** Both signals can be manipulated by changing the wording or sentence structure. I would experiment with additional signals that are less sensitive to these changes and test different weights.
+- **Prompt injection (PI01, PI02):** Both inputs are still classified as human. Although the model isn't actually following the instructions, I would explore ways to identify these patterns without penalizing legitimate writing.
+- **Malformed input (MF03–MF06):** The system still accepts control characters, punctuation-only text, long repetitive words, and emoji-only text. I would improve input validation to check whether the text is suitable for analysis before scoring it.
+
+I stopped after changing the AI threshold because I wanted to measure the effect of one change rather than make several changes at once without knowing which one helped.
 
 **The trade I'd make if this ran for real:**
 
 <!-- Two sentences. Fewer wrong accusations means more AI text getting through.
      Say which way you'd go and WHO PAYS FOR IT. -->
 
-
+I would prioritize reducing false accusations, even if that means more AI-generated writing goes undetected. This puts more responsibility on the platform and its moderators, but it avoids unfairly accusing genuine writers.
 
 <!-- ═════════════════════════════════════════════════════════════════════
 
