@@ -682,28 +682,117 @@ Produced by `run_eval.py::main` and saved in `results/run_2026-11-16_2149_before
 
      Look for a pattern. Five failures on one signal is one problem, not five. -->
 
+**Criterion 1 — False Positives:** Two of the ten human samples were classified as AI in all three trials, exceeding my target of at most one.
 
+- **Stage:** Both signals and the combining rule.
+- **Mechanism:** Two of the ten human samples were flagged as AI in every trial. The first had a high model score (0.7141), while the second had a high style score (0.9220). Both ended up above the AI threshold of 0.65. The system can mistake predictable wording and consistent writing styles for AI-generated text.
+
+**Broken attacks**
+
+| Attack | Stage | Mechanism |
+|---|---|---|
+| EV01 | Signal one | Typos made the text less predictable, lowering the model score to 0.1635. |
+| EV02 | Signal two | Breaking up sentences increased sentence length variation, lowering the style score to 0.1659. |
+| EV03 | Signal two | Adding a quotation changed the sentence structure, resulting in a style score of 0.3277. |
+| EV04 | Signal one | Unusual vocabulary made the text less predictable. The combined score fell just below the AI threshold at 0.6397. |
+| EV05 | Both signals | Heavy human editing made the wording and sentence structure less predictable, resulting in a combined score of 0.2228. |
+| EV06 | Signal two | Mixing very long and short sentences lowered the style score to 0.1000. |
+| EV08 | Signal one | The short text gave the model limited information to work with and received a model score of 0.2452. |
+| EV09 | Signal two, combining rule | Adding a human-written opening resulted in a low style score, bringing the combined score down to 0.4904. |
+| FP02 | Signal one | The predictable wording in formal human writing resulted in a combined score of 0.6591. |
+| FP05 | Signal one | The predictable language in technical documentation resulted in a combined score of 0.6657. |
+| PI01 | Signal two | The sentence structure resulted in a low style score of 0.1000, bringing the combined score into the human range. |
+| PI02 | Both signals | The fake system message received low scores from both signals, resulting in a human classification. |
+| MF03 | Route | Control characters passed input validation. |
+| MF04 | Route | Punctuation-only text passed input validation. |
+| MF05 | Route, both signals | A long, repetitive word passed validation and received high scores due to its predictability and lack of sentence variation. |
+| MF06 | Route, both signals | Emoji-only text passed validation and received high scores despite not containing actual writing. |
+
+Most of the failures came from the limitations of the two signals. Predictable human writing can be mistaken for AI, while AI-generated writing can avoid detection by changing its wording or sentence structure. The 50/50 weighted average also means that either signal can significantly affect the final classification.
+
+Another issue is that my input validation checks the type and length of the text but doesn't check whether it contains meaningful writing.
 
 ---
 
 ## The Improvement
 
 **What I changed:**
+I increased the AI threshold from 0.65 to 0.75, widening the unsure range while keeping both signals and their weights the same.
 
 **Which diagnosis pointed at it:**
+The false positive criterion and attacks FP02 and FP05 showed that human writing was being flagged as AI. Raising the threshold should reduce false accusations, although it may also allow more AI-generated writing to avoid detection.
 
 ### Attack Run — After
 
 <!-- Same format. `run_attacks.py --label after` -->
 
-
+| Attack | Family | HTTP Status | Guess | Outcome |
+|---|---|---|---|---|
+| EV01 | evasion | 200 | unsure | BROKE |
+| EV02 | evasion | 200 | unsure | BROKE |
+| EV03 | evasion | 200 | unsure | BROKE |
+| EV04 | evasion | 200 | unsure | BROKE |
+| EV05 | evasion | 200 | human | BROKE |
+| EV06 | evasion | 200 | human | BROKE |
+| EV07 | evasion | 200 | ai | HELD |
+| EV08 | evasion | 200 | unsure | BROKE |
+| EV09 | evasion | 200 | unsure | BROKE |
+| EV10 | evasion | 200 | unsure | BROKE |
+| FP01 | false_positive | 200 | unsure | HELD |
+| FP02 | false_positive | 200 | unsure | HELD |
+| FP03 | false_positive | 200 | unsure | HELD |
+| FP04 | false_positive | 200 | unsure | HELD |
+| FP05 | false_positive | 200 | unsure | HELD |
+| FP06 | false_positive | 200 | unsure | HELD |
+| FP07 | false_positive | 200 | unsure | HELD |
+| FP08 | false_positive | 200 | human | HELD |
+| PI01 | prompt_injection | 200 | human | BROKE |
+| PI02 | prompt_injection | 200 | human | BROKE |
+| PI03 | prompt_injection | 200 | unsure | HELD |
+| PI04 | prompt_injection | 200 | unsure | HELD |
+| PI05 | prompt_injection | 200 | unsure | HELD |
+| PI06 | prompt_injection | 200 | unsure | HELD |
+| MF01 | malformed | 400 | — | HELD |
+| MF02 | malformed | 400 | — | HELD |
+| MF03 | malformed | 200 | unsure | BROKE |
+| MF04 | malformed | 200 | unsure | BROKE |
+| MF05 | malformed | 200 | ai | BROKE |
+| MF06 | malformed | 200 | ai | BROKE |
+| MF07 | malformed | 200 | ai | HELD |
+| MF08 | malformed | 400 | — | HELD |
+| RQ01 | malformed | 400 | — | HELD |
+| RQ02 | malformed | 400 | — | HELD |
+| RQ03 | malformed | 400 | — | HELD |
+| RQ04 | malformed | 400 | — | HELD |
+| RQ05 | malformed | 400 | — | HELD |
+| RQ06 | malformed | 400 | — | HELD |
+| RQ07 | malformed | 400 | — | HELD |
+| RQ08 | malformed | 400 | — | HELD |
+| RQ09 | malformed | 400 | — | HELD |
+| RQ10 | malformed | 429 | — | HELD |
+| RQ11 | malformed | 429 | — | HELD |
+| RQ12 | malformed | 400 | — | HELD |
+| FL01_01 | flood_same_creator | 200 | unsure | HELD |
+| FL01_02 | flood_same_creator | 200 | unsure | HELD |
+| FL01_03 | flood_same_creator | 200 | unsure | HELD |
+| FL01_04 | flood_same_creator | 200 | unsure | HELD |
+| FL01_05 | flood_same_creator | 200 | unsure | HELD |
+| FL01_06 | flood_same_creator | 429 | — | HELD |
+| FL01_07 | flood_same_creator | 429 | — | HELD |
+| FL01_08 | flood_same_creator | 429 | — | HELD |
+| FL01_09 | flood_same_creator | 429 | — | HELD |
+| FL01_10 | flood_same_creator | 429 | — | HELD |
+| FL01_11 | flood_same_creator | 429 | — | HELD |
+| FL01_12 | flood_same_creator | 429 | — | HELD |
 
 **Did it help, and how do I know:**
 
 <!-- Widening the unsure band usually fixes one problem and creates another.
      Reporting that trade honestly is worth full credit. -->
 
+Yes, raising the AI threshold reduced false positives from 2/10 to 0/10 across all three trials, and all five criteria are now met. FP02 and FP05 are no longer flagged as AI, but EV10 now avoids detection. The number of AI samples correctly labeled as AI also dropped from 2/5 to 1/5.
 
+The system is less likely to falsely accuse human writers, but the trade-off is that more AI-generated writing gets through.
 
 ---
 
