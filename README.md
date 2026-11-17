@@ -49,7 +49,7 @@ app.py reads the input and generates a unique content_id.
 
 detector.py uses GPT-2 to measure how predictable the text is and returns a model score.
 
-stylometry.py measures writing patterns like sentence length, word variety, and punctuation to produce a style score.
+stylometry.py uses sentence length variation and advanced punctuation to produce a style score.
 
 scoring.py::combine_signals combines both scores into one AI-likelihood score.
 
@@ -112,7 +112,8 @@ Output:
 
 ### Signal two — the style signal
 
-**What it measures:** Looks at sentence length variation, word variety, and punctuation patterns.
+**What it measures:** Uses sentence length variation (80%) and advanced punctuation (20%) to estimate how AI-like the writing style is. Word variety is also measured but isn't included in the final style score.
+
 
 **Why that might differ between human and AI writing:** AI writing can have more consistent sentence structures, while human writing may vary more.
 
@@ -165,15 +166,12 @@ I wanted the label to explain why the system couldn't make a confident decision,
 <!-- One submission and one appeal, pasted as text: the request, the response,
      and the log entries. -->
 
-
-
 **A submission**
 
 <!-- The response needs content_id, guess, confidence, label, AND both
      signal scores - model_score and style_score. Unit 8's tools read those
      two off the response, so leaving them out costs you next unit's
      diagnostics. -->
-
 
 ```bash
 curl -X POST http://127.0.0.1:5000/submit \
@@ -272,6 +270,7 @@ curl "http://127.0.0.1:5000/log?limit=5"
     }
   ]
 }
+```
 
 ---
 
@@ -279,15 +278,15 @@ curl "http://127.0.0.1:5000/log?limit=5"
 
 **Moment 1**
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- **What I asked for:** I asked ChatGPT to help design the stylometry signal and figure out which writing patterns would be useful for detecting AI-generated text.
+- **What came back:** It initially suggested using sentence length variation, word variety, and punctuation density. After testing different samples, we found that word variety wasn't very reliable and regular punctuation could be misleading.
+- **What I changed:** I decided to focus on sentence length variation (80%) and advanced punctuation (20%), leaving word variety out of the final style score.
 
 **Moment 2**
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- **What I asked for:** I asked ChatGPT to help write the three classification labels, especially the unsure label.
+- **What came back:** The first suggestions were too vague and included unnecessary disclaimers. We also discussed how to communicate uncertainty without making an accusation.
+- **What I changed:** I simplified the human and AI labels and chose an unsure label that explains the writing shows a mix of human and AI patterns.
 
 <!-- ═══════════════════════ UNIT 8 — THE TEST ═══════════════════════ -->
 
