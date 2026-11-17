@@ -168,7 +168,7 @@ def health():
 
 
 @app.post("/submit")
-# @limiter.limit(f"{config.RATE_LIMIT_PER_MINUTE}/minute;{config.RATE_LIMIT_PER_DAY}/day")
+@limiter.limit(f"{config.RATE_LIMIT_PER_MINUTE}/minute;{config.RATE_LIMIT_PER_DAY}/day")
 def submit():
     """
     Take a piece of text, decide about it, log the decision, answer.
@@ -216,21 +216,26 @@ def submit():
     what should this do when `text` is missing, empty, or enormous? A crash on
     a malformed input is one of the most common real failures there is.
     """
+
     payload = request.get_json(silent=True) or {}
 
     if not isinstance(payload, dict):
+        audit.log_rejection("unknown", "invalid_json")
         return jsonify({"error": "Expected a JSON object."}), 400
 
     text = payload.get("text")
     creator_id = payload.get("creator_id")
 
     if not isinstance(text, str) or not text.strip():
+        audit.log_rejection(creator_id or "unknown", "invalid_text")
         return jsonify({"error": "Valid text is required."}), 400
 
     if len(text) > 10000:
+        audit.log_rejection(creator_id or "unknown", "text_too_long")
         return jsonify({"error": "Text exceeds 10000 characters."}), 400
 
     if not isinstance(creator_id, str) or not creator_id.strip():
+        audit.log_rejection("unknown", "invalid_creator_id")
         return jsonify({"error": "Valid creator_id is required."}), 400
 
     content_id = str(uuid.uuid4())
@@ -238,8 +243,10 @@ def submit():
     try:
         model_score = detector.model_signal(text)
     except ValueError as exc:
+        audit.log_rejection(creator_id, str(exc))
         return jsonify({"error": str(exc)}), 400
     except detector.DetectorUnavailable as exc:
+        audit.log_rejection(creator_id, "detector_unavailable")
         return jsonify({"error": str(exc)}), 503
 
     style_score = stylometry.style_signal(text)

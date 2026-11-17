@@ -294,7 +294,7 @@ curl "http://127.0.0.1:5000/log?limit=5"
 
 ## Rate Limiting
 
-**My limits:** ___ per minute, ___ per day
+**My limits:** 5 per minute, 50 per day
 
 **Why those numbers and not others:**
 <!-- Think about two people: a real writer submitting their own work a few
@@ -302,16 +302,38 @@ curl "http://127.0.0.1:5000/log?limit=5"
      thresholds. Your numbers have to be liveable for the first and hostile to
      the second. -->
 
+A regular writer probably only needs to submit their work a few times an hour. These limits give writers enough room to submit and revise their work while making it harder for scripts to send hundreds of variations to figure out the system's thresholds.
+
 **What a caller counts as:** <!-- per address, or per creator_id? They fail
 differently — one script can look like a thousand callers, and one household
 can look like one. -->
+
+Each caller is identified by their creator_id, with their IP address used as a fallback. This allows different writers on the same network to have separate limits, but someone could bypass the limit by changing their creator ID.
 
 **The run of status codes when I pushed past it:**
 
 <!-- python run_attacks.py --flood 15 -->
 
 ```
+  [ 1/15] 200
+  [ 2/15] 200
+  [ 3/15] 200
+  [ 4/15] 200
+  [ 5/15] 200
+  [ 6/15] 429
+  [ 7/15] 429
+  [ 8/15] 429
+  [ 9/15] 429
+  [10/15] 429
+  [11/15] 429
+  [12/15] 429
+  [13/15] 429
+  [14/15] 429
+  [15/15] 429
 
+============================================================
+200 200 200 200 200 429 429 429 429 429 429 429 429 429 429
+============================================================
 ```
 
 ---
