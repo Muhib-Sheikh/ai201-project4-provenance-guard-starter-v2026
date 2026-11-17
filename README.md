@@ -39,7 +39,58 @@
 <!-- The path a submission takes, from arriving to the label a reader sees.
      Six or seven steps — this is the trace you wrote in Milestone 1. -->
 
+Provenance Guard is a backend service that checks whether submitted writing might be AI-generated. It uses two different signals to produce a score and label, and lets writers appeal decisions they disagree with.
 
+### Path
+
+A writer submits their text and creator_id through POST /submit.
+
+app.py reads the input and generates a unique content_id.
+
+detector.py uses GPT-2 to measure how predictable the text is and returns a model score.
+
+stylometry.py measures writing patterns like sentence length, word variety, and punctuation to produce a style score.
+
+scoring.py::combine_signals combines both scores into one AI-likelihood score.
+
+scoring.py::score_to_label turns that score into a label: likely human, unsure, or likely AI.
+
+The result is saved in the audit log and returned as JSON for the website to display.
+
+### False Positive Example
+
+A real writer submits their own work, but the system gives it a combined score of 0.85 and labels it as likely AI-generated. The writer can submit an appeal through POST /appeal with their content_id and an explanation. The system records the appeal and changes the status to under_review.
+
+### Endpoint Shapes
+
+POST /submit
+
+Input:
+
+- text (string): The submitted writing.
+- creator_id (string): The writer's identifier.
+
+Output:
+
+- content_id (string): Unique submission ID.
+- guess (string): human, ai, or unsure.
+- confidence (float): Combined score from 0 to 1.
+- label (string): The label shown to readers.
+- model_score (float): Score from detector.py.
+- style_score (float): Score from stylometry.py.
+
+POST /appeal
+
+Input:
+
+- content_id (string): The submission being appealed.
+- reasoning (string): Why the writer disagrees.
+
+Output:
+
+- content_id (string): The appealed submission.
+- status (string): under_review.
+- message (string): Confirmation that the appeal was recorded.
 
 ---
 
@@ -53,19 +104,19 @@
 
 ### Signal one — the model signal
 
-**What it measures:**
+**What it measures:** How predictable the text is through perplexity. More predictable text gets a higher AI likelihood score.
 
-**Why that might differ between human and AI writing:**
+**Why that might differ between human and AI writing:** AI generated writing can be more predictable because language models generate text by predicting likely next words.
 
-**What it can't see:**
+**What it can't see:** It can't tell who actually wrote the text. Someone writing in simple, predictable sentences could be incorrectly flagged as AI.
 
 ### Signal two — the style signal
 
-**What it measures:**
+**What it measures:** Looks at sentence length variation, word variety, and punctuation patterns.
 
-**Why that might differ between human and AI writing:**
+**Why that might differ between human and AI writing:** AI writing can have more consistent sentence structures, while human writing may vary more.
 
-**What it can't see:**
+**What it can't see:** It doesn't understand the meaning or authorship of the text. Small changes like typos or different punctuation can affect its score.
 
 ### The combining rule
 
