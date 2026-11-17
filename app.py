@@ -32,6 +32,9 @@ import audit
 import config
 import detector
 
+import scoring
+import stylometry
+
 app = Flask(__name__)
 
 
@@ -239,10 +242,9 @@ def submit():
     except detector.DetectorUnavailable as exc:
         return jsonify({"error": str(exc)}), 503
 
-    style_score = 0.5
-    confidence = 0.5
-    guess = "unsure"
-    label = "Not evaluated yet."
+    style_score = stylometry.style_signal(text)
+    confidence = scoring.combine_signals(model_score, style_score)
+    guess, label = scoring.score_to_label(confidence)
 
     audit.log_decision(
         content_id=content_id,
@@ -270,7 +272,7 @@ def submit():
 @app.post("/appeal")
 def appeal():
     """
-    A writer says you got it wrong. ← TODO — Milestone 5
+    A writer says you got it wrong.
 
     Expects JSON:
         {"content_id": "...", "reasoning": "..."}
@@ -289,14 +291,41 @@ def appeal():
     """
     payload = request.get_json(silent=True) or {}
 
-    # TODO: delete this and build the route.
+    if not isinstance(payload, dict):
+        return jsonify({"error": "Expected a JSON object."}), 400
+
+    content_id = payload.get("content_id")
+    reasoning = payload.get("reasoning")
+
+    if not isinstance(content_id, str) or not content_id.strip():
+        return jsonify({"error": "Valid content_id is required."}), 400
+
+    if not isinstance(reasoning, str) or not reasoning.strip():
+        return jsonify({"error": "Appeal reasoning is required."}), 400
+
+    entries = audit.entries_for(content_id)
+
+    decision = next(
+        (entry for entry in entries if entry.get("status") == "decided"),
+        None,
+    )
+
+    if decision is None:
+        return jsonify({"error": "Submission not found."}), 404
+
+    audit.log_appeal(
+        content_id=content_id,
+        creator_id=decision["creator_id"],
+        reasoning=reasoning,
+    )
+
     return jsonify(
         {
-            "error": "not_implemented",
-            "message": "POST /appeal isn't built yet — see the TODO in app.py.",
-            "you_sent": payload,
+            "content_id": content_id,
+            "status": "under_review",
+            "message": "Appeal submitted successfully.",
         }
-    ), 501
+    )
 
 
 # ── Already works ─────────────────────────────────────────────────────────────

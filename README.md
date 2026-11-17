@@ -123,9 +123,9 @@ Output:
 <!-- Write the rule in words, then give the numbers. What happens when the two
      signals disagree? -->
 
-**The rule:**
+**The rule:** I use a weighted average of both signals. If they disagree, the combined score moves toward the middle instead of relying entirely on one signal.
 
-**The numbers:**
+**The numbers:** 50% model signal and 50% style signal.
 
 **Where it lives:** `scoring.py::combine_signals`
 
@@ -134,7 +134,7 @@ Output:
 
 **A case where my two signals split, and what my rule does with it:**
 
-
+A simple, repetitive writing sample had a model score of 0.8342 but a style score of 0.4861. The two signals disagreed, so my 50/50 weighted average brought the combined score down to about 0.6602 instead of relying entirely on the model.
 
 ---
 
@@ -147,16 +147,16 @@ Output:
 
 | Label | Score range | The exact text a reader sees |
 |---|---|---|
-| high-confidence human |  |  |
-| unsure |  |  |
-| high-confidence AI |  |  |
+| high-confidence human | 0.00–0.35 | This text appears to be written by a person. |
+| unsure | Above 0.35, below 0.65 | This text shows a mix of human and AI writing patterns, so the result is inconclusive. |
+| high-confidence AI | 0.65–1.00 | This text appears to be AI-generated. |
 
 **Why I worded the "unsure" one this way:**
 <!-- It's the hardest of the three. It has to admit uncertainty without
      sounding like an accusation, because the person reading it may well have
      written every word themselves. -->
 
-
+I wanted the label to explain why the system couldn't make a confident decision, without accusing the writer.
 
 ---
 
@@ -165,6 +165,8 @@ Output:
 <!-- One submission and one appeal, pasted as text: the request, the response,
      and the log entries. -->
 
+
+
 **A submission**
 
 <!-- The response needs content_id, guess, confidence, label, AND both
@@ -172,37 +174,104 @@ Output:
      two off the response, so leaving them out costs you next unit's
      diagnostics. -->
 
+
 ```bash
-$ curl -X POST http://127.0.0.1:5000/submit \
+curl -X POST http://127.0.0.1:5000/submit \
   -H "Content-Type: application/json" \
-  -d '{"text": "...", "creator_id": "..."}'
+  -d '{"text": "Hey whats going on guys. its your boy realog here back with a another warzone video. today i will be showing you guys have to get the secret neutral ground camo. Basically a special delivery drone will spawn at some point during the match. you have to shoot it down, retrieve the camo, and survive for the 3 minute camo, which then unlocks it.", "creator_id": "writer_human"}'
 ```
 
 ```json
-
+{
+  "confidence": 0.2776,
+  "content_id": "0a4b561e-e408-4033-9000-fc059c6a2ddc",
+  "guess": "human",
+  "label": "This text appears to be human-written.",
+  "model_score": 0.2275,
+  "style_score": 0.3276
+}
 ```
 
 **An appeal**
 
 ```bash
-$ curl -X POST http://127.0.0.1:5000/appeal \
+curl -X POST http://127.0.0.1:5000/appeal \
   -H "Content-Type: application/json" \
-  -d '{"content_id": "...", "reasoning": "..."}'
+  -d '{"content_id": "0a4b561e-e408-4033-9000-fc059c6a2ddc", "reasoning": "I wrote this myself and want the classification reviewed."}'
 ```
 
 ```json
-
+{
+  "content_id": "0a4b561e-e408-4033-9000-fc059c6a2ddc",
+  "message": "Appeal submitted successfully.",
+  "status": "under_review"
+}
 ```
 
 **What the log shows afterwards**
 
 ```bash
-$ curl "http://127.0.0.1:5000/log?limit=3"
+curl "http://127.0.0.1:5000/log?limit=5"
 ```
 
 ```json
-
-```
+{
+  "count": 5,
+  "entries": [
+    {
+      "combined_score": 0.7436,
+      "content_id": "b6e3bde4-d846-4119-b314-22f3d24ce0db",
+      "creator_id": "writer_001",
+      "guess": "unsure",
+      "label": "Not evaluated yet.",
+      "model_score": 0.8585,
+      "status": "decided",
+      "style_score": 0.6286,
+      "timestamp": "2026-11-17T01:09:03+00:00"
+    },
+    {
+      "combined_score": 0.7436,
+      "content_id": "0a07a406-4bac-4757-ae32-f82b4baa5f1c",
+      "creator_id": "writer_ai",
+      "guess": "ai",
+      "label": "This text appears to be AI-generated.",
+      "model_score": 0.8585,
+      "status": "decided",
+      "style_score": 0.6286,
+      "timestamp": "2026-11-17T01:32:32+00:00"
+    },
+    {
+      "combined_score": 0.2776,
+      "content_id": "0a4b561e-e408-4033-9000-fc059c6a2ddc",
+      "creator_id": "writer_human",
+      "guess": "human",
+      "label": "This text appears to be human-written.",
+      "model_score": 0.2275,
+      "status": "decided",
+      "style_score": 0.3276,
+      "timestamp": "2026-11-17T01:32:41+00:00"
+    },
+    {
+      "combined_score": 0.5467,
+      "content_id": "dce4610e-6854-4177-9211-1886bf910470",
+      "creator_id": "writer_unsure",
+      "guess": "unsure",
+      "label": "This text shows a mix of human and AI writing patterns, so the result is inconclusive.",
+      "model_score": 0.6388,
+      "status": "decided",
+      "style_score": 0.4546,
+      "timestamp": "2026-11-17T01:32:45+00:00"
+    },
+    {
+      "content_id": "0a4b561e-e408-4033-9000-fc059c6a2ddc",
+      "creator_id": "writer_human",
+      "event": "appeal",
+      "reasoning": "I wrote this myself and want the classification reviewed.",
+      "status": "under_review",
+      "timestamp": "2026-11-17T01:34:43+00:00"
+    }
+  ]
+}
 
 ---
 

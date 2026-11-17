@@ -47,9 +47,10 @@ def words(text: str) -> list[str]:
 
 # ── The three measures — YOU BUILD THESE ─────────────────────────────────────
 
+
 def sentence_length_spread(text: str) -> float:
     """
-    How much sentence length varies. ← TODO
+    How much sentence length varies.
 
     Returns:
         A float. Decide yourself what scale it's on and which direction means
@@ -64,13 +65,19 @@ def sentence_length_spread(text: str) -> float:
     `stdev` raises on fewer than two values. Decide what that should return
     before the attack set decides for you.
     """
-    # TODO: replace this
-    return 0.0
+
+    lengths = [len(words(s)) for s in sentences(text)]
+
+    if len(lengths) < 2:
+        return 0.0
+
+    mean = statistics.mean(lengths)
+    return statistics.stdev(lengths) / mean if mean else 0.0
 
 
 def type_token_ratio(text: str) -> float:
     """
-    Unique words over total words. ← TODO
+    Unique words over total words.
 
     Returns:
         A float between 0 and 1. Higher means more varied vocabulary.
@@ -80,13 +87,18 @@ def type_token_ratio(text: str) -> float:
     directly comparable on it, and if your test inputs vary a lot in length,
     that alone can look like a signal.
     """
-    # TODO: replace this
-    return 0.0
+
+    tokens = words(text)
+
+    if not tokens:
+        return 0.0
+
+    return len(set(tokens)) / len(tokens)
 
 
 def punctuation_density(text: str) -> float:
     """
-    How much punctuation, relative to length. ← TODO
+    How much punctuation, relative to length.
 
     Returns:
         A float. Whether you count all punctuation or only some kinds — commas,
@@ -94,11 +106,18 @@ def punctuation_density(text: str) -> float:
         more interesting than full stops, because they vary more between
         writers.
     """
-    # TODO: replace this
-    return 0.0
+
+    tokens = words(text)
+
+    if not tokens:
+        return 0.0
+
+    advanced = sum(char in ";:—–" for char in text)
+    return advanced / len(tokens)
 
 
 # ── Combining them ───────────────────────────────────────────────────────────
+
 
 def style_signal(text: str) -> float:
     """
@@ -122,8 +141,19 @@ def style_signal(text: str) -> float:
     you trust it. Plain and ordinary, not formal: formal prose reads as *human*
     to signal one, and it is plain writing that gets accused.
     """
-    # TODO: replace this
-    return 0.5
+
+    spread = sentence_length_spread(text)
+    punctuation = punctuation_density(text)
+
+    # Less sentence variation is more AI
+    spread_score = 1 - min(spread / 0.6, 1.0)
+
+    # More advanced punctuation is more AI
+    punctuation_score = 0.5 + 0.5 * min(punctuation / 0.05, 1.0)
+
+    score = 0.8 * spread_score + 0.2 * punctuation_score
+
+    return round(score, 4)
 
 
 if __name__ == "__main__":
@@ -139,4 +169,4 @@ if __name__ == "__main__":
     print(f"type_token_ratio         {type_token_ratio(text)}")
     print(f"punctuation_density      {punctuation_density(text)}")
     print(f"style_signal             {style_signal(text)}   (higher = more likely AI)")
-    print("\nAll zeros? These are stubs — Milestone 4 is where you build them.")
+    # print("\nAll zeros? These are stubs — Milestone 4 is where you build them.")
