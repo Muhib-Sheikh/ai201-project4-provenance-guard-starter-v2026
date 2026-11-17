@@ -42,63 +42,53 @@ Two things worth knowing before you pick numbers:
   a **miss**.
 
 ---
-## 1.
+## 1. False positives
 
 <!-- Your criterion. It must name a number. -->
 
+At most 1 of 10 human samples should receive the high confidence AI label.
 
-
-**Why this target:**
-
-
+**Why this target:** A false accusation could hurt a real writer, so I want the system to be cautious about labeling something as AI-generated. I'm allowing a small margin for error since the signals aren't perfect.
 
 ---
 
-## 2.
+## 2. Score Seperation
 
 <!-- Your criterion. -->
 
+Across 5 AI generated and 5 human samples, the average combined AI score should be at least 0.20 higher for the AI samples.
 
-
-**Why this target:**
-
-
+**Why this target:** The two signals should be able to distinguish between different types of writing. A 0.20 gap would show some meaningful separation without expecting perfect detection.
 
 ---
 
-## 3.
+## 3. Label Coverage
 
 <!-- Your criterion. -->
 
+All three labels (`human`, `unsure`, and `ai`) should each be produced by at least one test input.
 
-
-**Why this target:**
-
-
+**Why this target:** Every label needs to actually work, especially `unsure`, since the system should have an option when it can't make a confident decision.
 
 ---
 
-## 4.
+## 4. Appreal reliability
 
 <!-- Your criterion. -->
 
+All 5 valid appeals should return a confirmation, update the submission's status to `under_review`, and create a matching entry in the audit log.
 
-
-**Why this target:**
-
-
+**Why this target:** Writers need a reliable way to challenge incorrect decisions. Since false positives can affect someone's reputation, appeals should never be silently lost.
 
 ---
 
-## 5.
+## 5. Invalid input handling
 
 <!-- Your criterion. -->
 
+All 5 invalid submissions (missing `text`, empty text, whitespace-only text, non-string text, and text over 10,000 characters) should return HTTP `400` with a JSON error message instead of crashing.
 
-
-**Why this target:**
-
-
+**Why this target:** The service shouldn't produce unreliable results from invalid input. Limiting text length also matters because the model only processes a fixed number of tokens.
 
 ---
 

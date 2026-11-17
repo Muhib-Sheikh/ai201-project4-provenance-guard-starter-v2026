@@ -30,6 +30,7 @@ from flask import Flask, jsonify, request
 
 import audit
 import config
+import detector
 
 app = Flask(__name__)
 
@@ -48,6 +49,7 @@ app = Flask(__name__)
 # The storage backend is preconfigured, which stops Flask-Limiter printing a
 # warning on every start. In-memory is right for one laptop and wrong for
 # anything real — a restart forgets every count.
+
 
 class _LimiterOff:
     """
@@ -84,7 +86,11 @@ if config.RATE_LIMITING_ENABLED:
         if not isinstance(payload, dict):
             return get_remote_address()
         creator = payload.get("creator_id")
-        return creator if isinstance(creator, str) and creator.strip() else get_remote_address()
+        return (
+            creator
+            if isinstance(creator, str) and creator.strip()
+            else get_remote_address()
+        )
 
     limiter = Limiter(
         key_func=rate_limit_key,
@@ -108,14 +114,17 @@ if config.RATE_LIMITING_ENABLED:
             reason="rate_limited",
             limit=str(exc.description),
         )
-        return jsonify({
-            "error": "rate_limited",
-            "message": "Too many submissions. Try again shortly.",
-            "limit": str(exc.description),
-        }), 429
+        return jsonify(
+            {
+                "error": "rate_limited",
+                "message": "Too many submissions. Try again shortly.",
+                "limit": str(exc.description),
+            }
+        ), 429
 
 
 # ── The worked example. Already works. Don't edit. ────────────────────────────
+
 
 @app.post("/ping")
 def ping():
@@ -126,11 +135,13 @@ def ping():
     the framework turns it into a response. That's the whole idea.
     """
     payload = request.get_json(silent=True) or {}
-    return jsonify({
-        "ok": True,
-        "you_sent": payload.get("message"),
-        "service": "provenance-guard",
-    })
+    return jsonify(
+        {
+            "ok": True,
+            "you_sent": payload.get("message"),
+            "service": "provenance-guard",
+        }
+    )
 
 
 @app.get("/health")
@@ -139,16 +150,19 @@ def health():
     import detector
 
     loaded = detector._model is not None
-    return jsonify({
-        "ok": True,
-        "detector_model": config.DETECTOR_MODEL,
-        "detector_loaded": loaded,
-        "rate_limiting": config.RATE_LIMITING_ENABLED,
-        "log_entries": len(audit.read_entries()),
-    })
+    return jsonify(
+        {
+            "ok": True,
+            "detector_model": config.DETECTOR_MODEL,
+            "detector_loaded": loaded,
+            "rate_limiting": config.RATE_LIMITING_ENABLED,
+            "log_entries": len(audit.read_entries()),
+        }
+    )
 
 
 # ── YOU BUILD THIS ────────────────────────────────────────────────────────────
+
 
 @app.post("/submit")
 # @limiter.limit(f"{config.RATE_LIMIT_PER_MINUTE}/minute;{config.RATE_LIMIT_PER_DAY}/day")
@@ -201,15 +215,56 @@ def submit():
     """
     payload = request.get_json(silent=True) or {}
 
-    # TODO: delete this and build the route.
-    return jsonify({
-        "error": "not_implemented",
-        "message": "POST /submit isn't built yet — see the TODO in app.py.",
-        "you_sent": {
-            "text_length": len(payload.get("text", "")),
-            "creator_id": payload.get("creator_id"),
-        },
-    }), 501
+    if not isinstance(payload, dict):
+        return jsonify({"error": "Expected a JSON object."}), 400
+
+    text = payload.get("text")
+    creator_id = payload.get("creator_id")
+
+    if not isinstance(text, str) or not text.strip():
+        return jsonify({"error": "Valid text is required."}), 400
+
+    if len(text) > 10000:
+        return jsonify({"error": "Text exceeds 10000 characters."}), 400
+
+    if not isinstance(creator_id, str) or not creator_id.strip():
+        return jsonify({"error": "Valid creator_id is required."}), 400
+
+    content_id = str(uuid.uuid4())
+
+    try:
+        model_score = detector.model_signal(text)
+    except ValueError as exc:
+        return jsonify({"error": str(exc)}), 400
+    except detector.DetectorUnavailable as exc:
+        return jsonify({"error": str(exc)}), 503
+
+    style_score = 0.5
+    confidence = 0.5
+    guess = "unsure"
+    label = "Not evaluated yet."
+
+    audit.log_decision(
+        content_id=content_id,
+        creator_id=creator_id,
+        guess=guess,
+        model_score=model_score,
+        style_score=style_score,
+        combined_score=confidence,
+        label=label,
+        status="decided",
+    )
+
+    return jsonify(
+        {
+            "content_id": content_id,
+            "guess": guess,
+            "confidence": confidence,
+            "label": label,
+            "model_score": model_score,
+            "style_score": style_score,
+        }
+    )
 
 
 @app.post("/appeal")
@@ -235,14 +290,17 @@ def appeal():
     payload = request.get_json(silent=True) or {}
 
     # TODO: delete this and build the route.
-    return jsonify({
-        "error": "not_implemented",
-        "message": "POST /appeal isn't built yet — see the TODO in app.py.",
-        "you_sent": payload,
-    }), 501
+    return jsonify(
+        {
+            "error": "not_implemented",
+            "message": "POST /appeal isn't built yet — see the TODO in app.py.",
+            "you_sent": payload,
+        }
+    ), 501
 
 
 # ── Already works ─────────────────────────────────────────────────────────────
+
 
 @app.get("/log")
 def get_log():
@@ -262,13 +320,15 @@ def get_log():
 def main():
     print(f"Provenance Guard on http://{config.HOST}:{config.PORT}")
     print(f"  detector model:  {config.DETECTOR_MODEL}")
-    print(f"  rate limiting:   {'ON' if config.RATE_LIMITING_ENABLED else 'off (unit 8)'}")
+    print(
+        f"  rate limiting:   {'ON' if config.RATE_LIMITING_ENABLED else 'off (unit 8)'}"
+    )
     print(f"  audit log:       {config.AUDIT_LOG}")
     print()
     print("Check it's alive:")
-    print(f'  curl -X POST http://{config.HOST}:{config.PORT}/ping \\')
+    print(f"  curl -X POST http://{config.HOST}:{config.PORT}/ping \\")
     print('    -H "Content-Type: application/json" \\')
-    print("    -d '{\"message\": \"hello\"}'")
+    print('    -d \'{"message": "hello"}\'')
     print()
     # debug=True hands out an interactive debugger, so it's local-only — see config.py
     app.run(host=config.HOST, port=config.PORT, debug=config.DEBUG)
