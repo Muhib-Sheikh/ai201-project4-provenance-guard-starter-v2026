@@ -122,3 +122,35 @@ All 5 invalid submissions (missing `text`, empty text, whitespace-only text, non
      A number you missed stays where it is, gets diagnosed, and gets a fix
      attempted. That's where the points are.
      ───────────────────────────────────────────────────────────────────────── -->
+
+## Capstone
+
+### 1. Malformed Input Rejection
+
+All 8 invalid submissions (punctuation-only text, emoji-only text, numbers-only text, invalid control characters, repetitive characters, repetitive words, empty text, and whitespace-only text) should return HTTP `400` with a JSON error message.
+
+**Why this target:** The detector should only analyze text that is suitable for analysis. Returning a detection result for malformed text could mislead users and produce meaningless scores.
+
+### 2. Unnecessary Detector Execution
+
+The detector should not be called for any of the 8 invalid submissions, as indicated by the `detector_called` field in the request log.
+
+**Why this target:** Running the local model uses computing resources. Invalid submissions should be rejected before reaching the model, rather than wasting resources analyzing unsuitable text.
+
+### 3. Structured Logging
+
+All 11 submissions in each trial should have a matching structured request log entry containing a timestamp, request ID, input, output, HTTP status code, duration, CPU time, and whether the detector was called.
+
+**Why this target:** I want to be able to trace every submission, including rejected ones. Missing log entries would make it harder to identify failures and understand how the system is behaving.
+
+### 4. Invalid Input Rejection Latency
+
+At least 7 of the 8 invalid submissions should return HTTP `400` in under 100 milliseconds, measured using the server-side request duration after the model has been warmed up.
+
+**Why this target:** Input validation is much less computationally expensive than running the detector, so invalid submissions should be rejected quickly. I'm allowing one exception to account for occasional variations in execution time.
+
+### 5. Valid Input Handling
+
+All 3 valid writing samples (plain text, text containing emojis, and multiline text) should return HTTP `200` with a content ID, guess, confidence, label, model score, and style score.
+
+**Why this target:** I don't want stricter input validation to prevent legitimate writers from submitting their work. The extension should improve how invalid submissions are handled without breaking the original detection process.
