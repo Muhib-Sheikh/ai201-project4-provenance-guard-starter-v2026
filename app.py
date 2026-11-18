@@ -26,7 +26,7 @@ Routes:
 
 import uuid
 
-from flask import Flask, jsonify, request
+from flask import g, Flask, jsonify, request
 
 import audit
 import config
@@ -34,8 +34,11 @@ import detector
 
 import scoring
 import stylometry
+import validation
+import request_logging
 
 app = Flask(__name__)
+request_logging.init_app(app)
 
 
 # ── Rate limiting — UNIT 8 ────────────────────────────────────────────────────
@@ -238,9 +241,21 @@ def submit():
         audit.log_rejection("unknown", "invalid_creator_id")
         return jsonify({"error": "Valid creator_id is required."}), 400
 
+    validation_error = validation.validate_text(text)
+
+    if validation_error is not None:
+        audit.log_rejection(creator_id, validation_error)
+        return jsonify(
+            {
+                "error": "Text is unsuitable for analysis.",
+                "reason": validation_error,
+            }
+        ), 400
+
     content_id = str(uuid.uuid4())
 
     try:
+        g.detector_called = True
         model_score = detector.model_signal(text)
     except ValueError as exc:
         audit.log_rejection(creator_id, str(exc))
