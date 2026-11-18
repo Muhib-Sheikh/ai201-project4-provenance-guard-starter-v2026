@@ -4,6 +4,10 @@
 >
 > **New to this repo? Read [RUNNING.md](RUNNING.md) first.**
 >
+> **Running the completed project? See the
+> [Capstone setup instructions](#capstone--running-provenance-guard)
+> below.**
+>
 > Once `python test.py` passes, in one terminal:
 >
 > ```bash
@@ -873,3 +877,15 @@ I would prioritize reducing false accusations, even if that means more AI-genera
 ---
 
 📖 **How to run this project: [RUNNING.md](RUNNING.md)**
+
+## Capstone
+
+**What This Extends**
+
+This project extends Provenance Guard, a backend service I built to estimate whether submitted writing might be AI-generated. In my previous attack tests, I found that the service still accepted control characters, punctuation-only text, emoji-only text, and long repetitive words. These inputs could reach the detector and get a classification even though they weren't suitable for analysis.
+
+For the capstone, I wanted to reject unsuitable inputs before running the model and make it easier to see what happened to each request.
+
+**The Shape**
+
+I chose Shape B — Harden against failure. I added an input validation layer and structured request logging so I could measure how the service handles valid and invalid submissions. The detection model, signal weights, classification thresholds, and appeal workflow are outside the scope of this extension.
