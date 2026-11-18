@@ -306,3 +306,48 @@ is evidence, and the entries you paste into your README are what unit 8 grades.
 
 **Do not delete and recreate this repository.** You submit the same URL both
 units.
+
+# Capstone — Running Provenance Guard
+
+Provenance Guard runs locally and does not require an API key or a hosted service.
+
+**Requirements**
+
+- Python 3.11, 3.12, or 3.13
+- Dependencies listed in `requirements.txt`
+- GPT-2 model (approximately 550 MB, downloaded on first use)
+
+**Setup**
+
+1. Clone this repository and open the project directory.
+2. Create a virtual environment with `python3 -m venv .venv`.
+3. Activate it with `source .venv/bin/activate`.
+4. Install dependencies with `pip install -r requirements.txt`.
+5. Run `python test.py` to check the environment.
+6. Run `python detector.py` to download the model if needed.
+
+**Start the service**
+
+Run the following command:
+
+`gunicorn app:app --bind 127.0.0.1:5000 --workers 1 --threads 1 --timeout 120`
+
+The service will be available at http://127.0.0.1:5000.
+
+On Windows, where Gunicorn is not supported natively, you can run `python app.py` for local testing after setting `AI201_DEBUG` to `0`.
+
+**Endpoints**
+
+| Endpoint | Purpose |
+|---|---|
+| GET /health | Check service status |
+| POST /submit | Analyze a piece of writing |
+| POST /appeal | Appeal a detection decision |
+| GET /log | View the decision audit log |
+
+**Logs**
+
+- `logs/audit.jsonl`: Detection decisions, appeals, and rejections.
+- `logs/capstone_requests.jsonl`: Submission and appeal requests, responses, execution times, and detector usage.
+
+The first submission may take longer because the model needs to load into memory. Use synthetic or non-sensitive text when testing because request data is logged.
