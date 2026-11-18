@@ -1,0 +1,382 @@
+[
+  {
+    "trial": 1,
+    "case": "valid_plain",
+    "input": {
+      "text": "I went to the library after class today. It was quiet, so I finished my homework.",
+      "creator_id": "capstone_9c17e75890d943d6acbca36b0f5255a9"
+    },
+    "status_code": 200,
+    "output": {
+      "confidence": 0.7961,
+      "content_id": "c26b018d-2166-4de1-b0d0-2bac73e075df",
+      "guess": "ai",
+      "label": "This text appears to be AI-generated.",
+      "model_score": 0.6921,
+      "style_score": 0.9
+    },
+    "request_id": "6d11a61f198a4e179cb81e3a85e5c5fb",
+    "client_duration_ms": 36.677,
+    "log": {
+      "timestamp": "2026-11-18T23:00:12.922190+00:00",
+      "request_id": "6d11a61f198a4e179cb81e3a85e5c5fb",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"I went to the library after class today. It was quiet, so I finished my homework.\", \"creator_id\": \"capstone_9c17e75890d943d6acbca36b0f5255a9\"}",
+      "input_truncated": false,
+      "output": {
+        "confidence": 0.7961,
+        "content_id": "c26b018d-2166-4de1-b0d0-2bac73e075df",
+        "guess": "ai",
+        "label": "This text appears to be AI-generated.",
+        "model_score": 0.6921,
+        "style_score": 0.9
+      },
+      "status_code": 200,
+      "duration_ms": 33.749,
+      "cpu_seconds": 0.031104,
+      "detector_called": true
+    }
+  },
+  {
+    "trial": 2,
+    "case": "valid_emoji",
+    "input": {
+      "text": "I finally finished my project today! I'm glad it's over \ud83d\ude02",
+      "creator_id": "capstone_5a192b76063948289ae8e0080f9e9b58"
+    },
+    "status_code": 200,
+    "output": {
+      "confidence": 0.536,
+      "content_id": "18bed795-b0e9-4cb5-b251-7f5c73dbcddd",
+      "guess": "unsure",
+      "label": "This text shows a mix of human and AI writing patterns, so the result is inconclusive.",
+      "model_score": 0.5491,
+      "style_score": 0.5229
+    },
+    "request_id": "72c3b9c1b7b24d9ab491c74ce4a08c9f",
+    "client_duration_ms": 21.842,
+    "log": {
+      "timestamp": "2026-11-18T23:00:12.957197+00:00",
+      "request_id": "72c3b9c1b7b24d9ab491c74ce4a08c9f",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"I finally finished my project today! I'm glad it's over \\ud83d\\ude02\", \"creator_id\": \"capstone_5a192b76063948289ae8e0080f9e9b58\"}",
+      "input_truncated": false,
+      "output": {
+        "confidence": 0.536,
+        "content_id": "18bed795-b0e9-4cb5-b251-7f5c73dbcddd",
+        "guess": "unsure",
+        "label": "This text shows a mix of human and AI writing patterns, so the result is inconclusive.",
+        "model_score": 0.5491,
+        "style_score": 0.5229
+      },
+      "status_code": 200,
+      "duration_ms": 20.159,
+      "cpu_seconds": 0.020981,
+      "detector_called": true
+    }
+  },
+  {
+    "trial": 3,
+    "case": "valid_multiline",
+    "input": {
+      "text": "Today was a busy day.\nI had two classes and a meeting.",
+      "creator_id": "capstone_dc80f0535e8f44cd860fa2a11ddff2b6"
+    },
+    "status_code": 200,
+    "output": {
+      "confidence": 0.6103,
+      "content_id": "a0e08142-1f8e-4743-821a-63066129ae13",
+      "guess": "unsure",
+      "label": "This text shows a mix of human and AI writing patterns, so the result is inconclusive.",
+      "model_score": 0.6349,
+      "style_score": 0.5857
+    },
+    "request_id": "77476c319e774b33995e576ec7947f4b",
+    "client_duration_ms": 28.601,
+    "log": {
+      "timestamp": "2026-11-18T23:00:12.980081+00:00",
+      "request_id": "77476c319e774b33995e576ec7947f4b",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"Today was a busy day.\\nI had two classes and a meeting.\", \"creator_id\": \"capstone_dc80f0535e8f44cd860fa2a11ddff2b6\"}",
+      "input_truncated": false,
+      "output": {
+        "confidence": 0.6103,
+        "content_id": "a0e08142-1f8e-4743-821a-63066129ae13",
+        "guess": "unsure",
+        "label": "This text shows a mix of human and AI writing patterns, so the result is inconclusive.",
+        "model_score": 0.6349,
+        "style_score": 0.5857
+      },
+      "status_code": 200,
+      "duration_ms": 26.228,
+      "cpu_seconds": 0.024736,
+      "detector_called": true
+    }
+  },
+  {
+    "trial": 4,
+    "case": "valid_plain",
+    "input": {
+      "text": "I went to the library after class today. It was quiet, so I finished my homework.",
+      "creator_id": "capstone_d30d687ed97248c396c72d16f4c41528"
+    },
+    "status_code": 200,
+    "output": {
+      "confidence": 0.7961,
+      "content_id": "41a02234-88a4-4cce-bd1b-c7c5af8d320e",
+      "guess": "ai",
+      "label": "This text appears to be AI-generated.",
+      "model_score": 0.6921,
+      "style_score": 0.9
+    },
+    "request_id": "b0c120c98652496685e7fac84b263b87",
+    "client_duration_ms": 23.119,
+    "log": {
+      "timestamp": "2026-11-18T23:00:13.007946+00:00",
+      "request_id": "b0c120c98652496685e7fac84b263b87",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"I went to the library after class today. It was quiet, so I finished my homework.\", \"creator_id\": \"capstone_d30d687ed97248c396c72d16f4c41528\"}",
+      "input_truncated": false,
+      "output": {
+        "confidence": 0.7961,
+        "content_id": "41a02234-88a4-4cce-bd1b-c7c5af8d320e",
+        "guess": "ai",
+        "label": "This text appears to be AI-generated.",
+        "model_score": 0.6921,
+        "style_score": 0.9
+      },
+      "status_code": 200,
+      "duration_ms": 21.789,
+      "cpu_seconds": 0.025614,
+      "detector_called": true
+    }
+  },
+  {
+    "trial": 5,
+    "case": "valid_emoji",
+    "input": {
+      "text": "I finally finished my project today! I'm glad it's over \ud83d\ude02",
+      "creator_id": "capstone_08639615bca24ce0bcb929869b90d8d4"
+    },
+    "status_code": 200,
+    "output": {
+      "confidence": 0.536,
+      "content_id": "edb5cd2d-61d6-44eb-b243-dfe0c1598168",
+      "guess": "unsure",
+      "label": "This text shows a mix of human and AI writing patterns, so the result is inconclusive.",
+      "model_score": 0.5491,
+      "style_score": 0.5229
+    },
+    "request_id": "555acdcd50834f0aa3680c8914afeaf9",
+    "client_duration_ms": 16.363,
+    "log": {
+      "timestamp": "2026-11-18T23:00:13.030980+00:00",
+      "request_id": "555acdcd50834f0aa3680c8914afeaf9",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"I finally finished my project today! I'm glad it's over \\ud83d\\ude02\", \"creator_id\": \"capstone_08639615bca24ce0bcb929869b90d8d4\"}",
+      "input_truncated": false,
+      "output": {
+        "confidence": 0.536,
+        "content_id": "edb5cd2d-61d6-44eb-b243-dfe0c1598168",
+        "guess": "unsure",
+        "label": "This text shows a mix of human and AI writing patterns, so the result is inconclusive.",
+        "model_score": 0.5491,
+        "style_score": 0.5229
+      },
+      "status_code": 200,
+      "duration_ms": 15.188,
+      "cpu_seconds": 0.017866,
+      "detector_called": true
+    }
+  },
+  {
+    "trial": 6,
+    "case": "valid_multiline",
+    "input": {
+      "text": "Today was a busy day.\nI had two classes and a meeting.",
+      "creator_id": "capstone_0bf06d48fab44c989c3e247c81ea9bd0"
+    },
+    "status_code": 200,
+    "output": {
+      "confidence": 0.6103,
+      "content_id": "9c2e796e-1974-4f38-be30-6dabbecca9f8",
+      "guess": "unsure",
+      "label": "This text shows a mix of human and AI writing patterns, so the result is inconclusive.",
+      "model_score": 0.6349,
+      "style_score": 0.5857
+    },
+    "request_id": "852efbdc678b42569a48a188580a0fc1",
+    "client_duration_ms": 15.865,
+    "log": {
+      "timestamp": "2026-11-18T23:00:13.047387+00:00",
+      "request_id": "852efbdc678b42569a48a188580a0fc1",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"Today was a busy day.\\nI had two classes and a meeting.\", \"creator_id\": \"capstone_0bf06d48fab44c989c3e247c81ea9bd0\"}",
+      "input_truncated": false,
+      "output": {
+        "confidence": 0.6103,
+        "content_id": "9c2e796e-1974-4f38-be30-6dabbecca9f8",
+        "guess": "unsure",
+        "label": "This text shows a mix of human and AI writing patterns, so the result is inconclusive.",
+        "model_score": 0.6349,
+        "style_score": 0.5857
+      },
+      "status_code": 200,
+      "duration_ms": 14.672,
+      "cpu_seconds": 0.017424,
+      "detector_called": true
+    }
+  },
+  {
+    "trial": 7,
+    "case": "valid_plain",
+    "input": {
+      "text": "I went to the library after class today. It was quiet, so I finished my homework.",
+      "creator_id": "capstone_93c82281946e49e6a68cc3ecd55a3686"
+    },
+    "status_code": 200,
+    "output": {
+      "confidence": 0.7961,
+      "content_id": "74052ed5-67b5-4a8b-9e1e-f0d0f7a9aa94",
+      "guess": "ai",
+      "label": "This text appears to be AI-generated.",
+      "model_score": 0.6921,
+      "style_score": 0.9
+    },
+    "request_id": "fd8f6a93427046e9b4798a6f10c7d6ae",
+    "client_duration_ms": 20.204,
+    "log": {
+      "timestamp": "2026-11-18T23:00:13.063175+00:00",
+      "request_id": "fd8f6a93427046e9b4798a6f10c7d6ae",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"I went to the library after class today. It was quiet, so I finished my homework.\", \"creator_id\": \"capstone_93c82281946e49e6a68cc3ecd55a3686\"}",
+      "input_truncated": false,
+      "output": {
+        "confidence": 0.7961,
+        "content_id": "74052ed5-67b5-4a8b-9e1e-f0d0f7a9aa94",
+        "guess": "ai",
+        "label": "This text appears to be AI-generated.",
+        "model_score": 0.6921,
+        "style_score": 0.9
+      },
+      "status_code": 200,
+      "duration_ms": 19.102,
+      "cpu_seconds": 0.023879,
+      "detector_called": true
+    }
+  },
+  {
+    "trial": 8,
+    "case": "valid_emoji",
+    "input": {
+      "text": "I finally finished my project today! I'm glad it's over \ud83d\ude02",
+      "creator_id": "capstone_f3f37aa48a024905b6ecc52d0ddff3fe"
+    },
+    "status_code": 200,
+    "output": {
+      "confidence": 0.536,
+      "content_id": "497fae6e-ef39-42af-b32f-6e9d5a6f5eeb",
+      "guess": "unsure",
+      "label": "This text shows a mix of human and AI writing patterns, so the result is inconclusive.",
+      "model_score": 0.5491,
+      "style_score": 0.5229
+    },
+    "request_id": "a3c84f3fab564451b467c778721a7def",
+    "client_duration_ms": 16.341,
+    "log": {
+      "timestamp": "2026-11-18T23:00:13.083636+00:00",
+      "request_id": "a3c84f3fab564451b467c778721a7def",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"I finally finished my project today! I'm glad it's over \\ud83d\\ude02\", \"creator_id\": \"capstone_f3f37aa48a024905b6ecc52d0ddff3fe\"}",
+      "input_truncated": false,
+      "output": {
+        "confidence": 0.536,
+        "content_id": "497fae6e-ef39-42af-b32f-6e9d5a6f5eeb",
+        "guess": "unsure",
+        "label": "This text shows a mix of human and AI writing patterns, so the result is inconclusive.",
+        "model_score": 0.5491,
+        "style_score": 0.5229
+      },
+      "status_code": 200,
+      "duration_ms": 15.035,
+      "cpu_seconds": 0.017795,
+      "detector_called": true
+    }
+  },
+  {
+    "trial": 9,
+    "case": "valid_multiline",
+    "input": {
+      "text": "Today was a busy day.\nI had two classes and a meeting.",
+      "creator_id": "capstone_fa4c131dfee94666a6b31b411e5e06c6"
+    },
+    "status_code": 200,
+    "output": {
+      "confidence": 0.6103,
+      "content_id": "1e815b09-d042-4f0b-8809-c4c342a47876",
+      "guess": "unsure",
+      "label": "This text shows a mix of human and AI writing patterns, so the result is inconclusive.",
+      "model_score": 0.6349,
+      "style_score": 0.5857
+    },
+    "request_id": "582859ea8279415794e42607f94b2db4",
+    "client_duration_ms": 15.998,
+    "log": {
+      "timestamp": "2026-11-18T23:00:13.099771+00:00",
+      "request_id": "582859ea8279415794e42607f94b2db4",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"Today was a busy day.\\nI had two classes and a meeting.\", \"creator_id\": \"capstone_fa4c131dfee94666a6b31b411e5e06c6\"}",
+      "input_truncated": false,
+      "output": {
+        "confidence": 0.6103,
+        "content_id": "1e815b09-d042-4f0b-8809-c4c342a47876",
+        "guess": "unsure",
+        "label": "This text shows a mix of human and AI writing patterns, so the result is inconclusive.",
+        "model_score": 0.6349,
+        "style_score": 0.5857
+      },
+      "status_code": 200,
+      "duration_ms": 14.935,
+      "cpu_seconds": 0.017711,
+      "detector_called": true
+    }
+  },
+  {
+    "trial": 10,
+    "case": "valid_plain",
+    "input": {
+      "text": "I went to the library after class today. It was quiet, so I finished my homework.",
+      "creator_id": "capstone_dd235c88496449568da0bb9516024eaa"
+    },
+    "status_code": 200,
+    "output": {
+      "confidence": 0.7961,
+      "content_id": "d03f9500-8fbe-45e6-b22b-fddf12fa887e",
+      "guess": "ai",
+      "label": "This text appears to be AI-generated.",
+      "model_score": 0.6921,
+      "style_score": 0.9
+    },
+    "request_id": "98adf921fa104cad8d3a452f1b970b85",
+    "client_duration_ms": 21.011,
+    "log": {
+      "timestamp": "2026-11-18T23:00:13.115914+00:00",
+      "request_id": "98adf921fa104cad8d3a452f1b970b85",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"I went to the library after class today. It was quiet, so I finished my homework.\", \"creator_id\": \"capstone_dd235c88496449568da0bb9516024eaa\"}",
+      "input_truncated": false,
+      "output": {
+        "confidence": 0.7961,
+        "content_id": "d03f9500-8fbe-45e6-b22b-fddf12fa887e",
+        "guess": "ai",
+        "label": "This text appears to be AI-generated.",
+        "model_score": 0.6921,
+        "style_score": 0.9
+      },
+      "status_code": 200,
+      "duration_ms": 19.777,
+      "cpu_seconds": 0.024784,
+      "detector_called": true
+    }
+  }
+]
