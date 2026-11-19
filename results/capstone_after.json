@@ -1,0 +1,1052 @@
+[
+  {
+    "trial": 1,
+    "case": "punctuation",
+    "input": {
+      "text": "!!!!!!!!!!!!!",
+      "creator_id": "capstone_a8213a5ac29e4c4586b253341ca34bb3"
+    },
+    "status_code": 400,
+    "output": {
+      "error": "Text is unsuitable for analysis.",
+      "reason": "no_alphabetic_characters"
+    },
+    "request_id": "d6a3c20ca719455bbc87fc4ffe0536b0",
+    "client_duration_ms": 1.523,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.065075+00:00",
+      "request_id": "d6a3c20ca719455bbc87fc4ffe0536b0",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"!!!!!!!!!!!!!\", \"creator_id\": \"capstone_a8213a5ac29e4c4586b253341ca34bb3\"}",
+      "input_truncated": false,
+      "output": {
+        "error": "Text is unsuitable for analysis.",
+        "reason": "no_alphabetic_characters"
+      },
+      "status_code": 400,
+      "duration_ms": 0.283,
+      "cpu_seconds": 0.000288,
+      "detector_called": false
+    }
+  },
+  {
+    "trial": 1,
+    "case": "emoji_only",
+    "input": {
+      "text": "\ud83d\ude02\ud83d\ude02\ud83d\ude02\ud83d\ude02\ud83d\ude02\ud83d\ude02\ud83d\ude02\ud83d\ude02",
+      "creator_id": "capstone_d922844b2b614c8b966f54d5f768feb0"
+    },
+    "status_code": 400,
+    "output": {
+      "error": "Text is unsuitable for analysis.",
+      "reason": "no_alphabetic_characters"
+    },
+    "request_id": "6ce0f719f3be45d6aa8c8cdfa2297c6b",
+    "client_duration_ms": 1.142,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.066317+00:00",
+      "request_id": "6ce0f719f3be45d6aa8c8cdfa2297c6b",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"\\ud83d\\ude02\\ud83d\\ude02\\ud83d\\ude02\\ud83d\\ude02\\ud83d\\ude02\\ud83d\\ude02\\ud83d\\ude02\\ud83d\\ude02\", \"creator_id\": \"capstone_d922844b2b614c8b966f54d5f768feb0\"}",
+      "input_truncated": false,
+      "output": {
+        "error": "Text is unsuitable for analysis.",
+        "reason": "no_alphabetic_characters"
+      },
+      "status_code": 400,
+      "duration_ms": 0.184,
+      "cpu_seconds": 0.000183,
+      "detector_called": false
+    }
+  },
+  {
+    "trial": 1,
+    "case": "numbers_only",
+    "input": {
+      "text": "123456789012345",
+      "creator_id": "capstone_5403dd589f654035ada652b36e965195"
+    },
+    "status_code": 400,
+    "output": {
+      "error": "Text is unsuitable for analysis.",
+      "reason": "no_alphabetic_characters"
+    },
+    "request_id": "fd4c3f402e8544a49060a63667dcc8bd",
+    "client_duration_ms": 1.407,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.067631+00:00",
+      "request_id": "fd4c3f402e8544a49060a63667dcc8bd",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"123456789012345\", \"creator_id\": \"capstone_5403dd589f654035ada652b36e965195\"}",
+      "input_truncated": false,
+      "output": {
+        "error": "Text is unsuitable for analysis.",
+        "reason": "no_alphabetic_characters"
+      },
+      "status_code": 400,
+      "duration_ms": 0.283,
+      "cpu_seconds": 0.000273,
+      "detector_called": false
+    }
+  },
+  {
+    "trial": 1,
+    "case": "control_characters",
+    "input": {
+      "text": "Hello\u0000this is a test.",
+      "creator_id": "capstone_1bb57e2d59fb4f99a12333b118a2e1c7"
+    },
+    "status_code": 400,
+    "output": {
+      "error": "Text is unsuitable for analysis.",
+      "reason": "invalid_control_characters"
+    },
+    "request_id": "bf2b90628c6f47df80108f2412d8d824",
+    "client_duration_ms": 1.656,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.069193+00:00",
+      "request_id": "bf2b90628c6f47df80108f2412d8d824",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"Hello\\u0000this is a test.\", \"creator_id\": \"capstone_1bb57e2d59fb4f99a12333b118a2e1c7\"}",
+      "input_truncated": false,
+      "output": {
+        "error": "Text is unsuitable for analysis.",
+        "reason": "invalid_control_characters"
+      },
+      "status_code": 400,
+      "duration_ms": 0.338,
+      "cpu_seconds": 0.000333,
+      "detector_called": false
+    }
+  },
+  {
+    "trial": 1,
+    "case": "repetitive_characters",
+    "input": {
+      "text": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "creator_id": "capstone_eaa085fe92d74133855aa38e969f6f1d"
+    },
+    "status_code": 400,
+    "output": {
+      "error": "Text is unsuitable for analysis.",
+      "reason": "repetitive_text"
+    },
+    "request_id": "4d4b3fe240894e2abdf33d90ee7cce25",
+    "client_duration_ms": 1.173,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.070655+00:00",
+      "request_id": "4d4b3fe240894e2abdf33d90ee7cce25",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"creator_id\": \"capstone_eaa085fe92d74133855aa38e969f6f1d\"}",
+      "input_truncated": false,
+      "output": {
+        "error": "Text is unsuitable for analysis.",
+        "reason": "repetitive_text"
+      },
+      "status_code": 400,
+      "duration_ms": 0.203,
+      "cpu_seconds": 0.000204,
+      "detector_called": false
+    }
+  },
+  {
+    "trial": 1,
+    "case": "repetitive_words",
+    "input": {
+      "text": "hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello ",
+      "creator_id": "capstone_965843f8496e4bbea251585736620074"
+    },
+    "status_code": 400,
+    "output": {
+      "error": "Text is unsuitable for analysis.",
+      "reason": "repetitive_text"
+    },
+    "request_id": "c2513354e3564c4683b1f38336189236",
+    "client_duration_ms": 2.151,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.071924+00:00",
+      "request_id": "c2513354e3564c4683b1f38336189236",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello \", \"creator_id\": \"capstone_965843f8496e4bbea251585736620074\"}",
+      "input_truncated": false,
+      "output": {
+        "error": "Text is unsuitable for analysis.",
+        "reason": "repetitive_text"
+      },
+      "status_code": 400,
+      "duration_ms": 0.432,
+      "cpu_seconds": 0.000382,
+      "detector_called": false
+    }
+  },
+  {
+    "trial": 1,
+    "case": "empty",
+    "input": {
+      "text": "",
+      "creator_id": "capstone_d7d0d68eb27a4f99b108c0883e281933"
+    },
+    "status_code": 400,
+    "output": {
+      "error": "Valid text is required."
+    },
+    "request_id": "23d3ac76804241bd98ff3ea50f64d328",
+    "client_duration_ms": 1.932,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.074385+00:00",
+      "request_id": "23d3ac76804241bd98ff3ea50f64d328",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"\", \"creator_id\": \"capstone_d7d0d68eb27a4f99b108c0883e281933\"}",
+      "input_truncated": false,
+      "output": {
+        "error": "Valid text is required."
+      },
+      "status_code": 400,
+      "duration_ms": 0.386,
+      "cpu_seconds": 0.000355,
+      "detector_called": false
+    }
+  },
+  {
+    "trial": 1,
+    "case": "whitespace",
+    "input": {
+      "text": "   ",
+      "creator_id": "capstone_332e9ae192e54c6d861d89523602cd8f"
+    },
+    "status_code": 400,
+    "output": {
+      "error": "Valid text is required."
+    },
+    "request_id": "3a694c4c8ac44f1eaa16d89b2db8382f",
+    "client_duration_ms": 1.996,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.076588+00:00",
+      "request_id": "3a694c4c8ac44f1eaa16d89b2db8382f",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"   \", \"creator_id\": \"capstone_332e9ae192e54c6d861d89523602cd8f\"}",
+      "input_truncated": false,
+      "output": {
+        "error": "Valid text is required."
+      },
+      "status_code": 400,
+      "duration_ms": 0.449,
+      "cpu_seconds": 0.000235,
+      "detector_called": false
+    }
+  },
+  {
+    "trial": 1,
+    "case": "valid_plain",
+    "input": {
+      "text": "I went to the library after class today. It was quiet, so I finished my homework.",
+      "creator_id": "capstone_c6e23c7abd90432789fa50aa42aaafc1"
+    },
+    "status_code": 200,
+    "output": {
+      "confidence": 0.7961,
+      "content_id": "bb662f52-4b7a-4a4d-9631-8d2faa91ff1e",
+      "guess": "ai",
+      "label": "This text appears to be AI-generated.",
+      "model_score": 0.6921,
+      "style_score": 0.9
+    },
+    "request_id": "2f1948a785d14c099d0de7d47719c54a",
+    "client_duration_ms": 24.926,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.078264+00:00",
+      "request_id": "2f1948a785d14c099d0de7d47719c54a",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"I went to the library after class today. It was quiet, so I finished my homework.\", \"creator_id\": \"capstone_c6e23c7abd90432789fa50aa42aaafc1\"}",
+      "input_truncated": false,
+      "output": {
+        "confidence": 0.7961,
+        "content_id": "bb662f52-4b7a-4a4d-9631-8d2faa91ff1e",
+        "guess": "ai",
+        "label": "This text appears to be AI-generated.",
+        "model_score": 0.6921,
+        "style_score": 0.9
+      },
+      "status_code": 200,
+      "duration_ms": 23.592,
+      "cpu_seconds": 0.028804,
+      "detector_called": true
+    }
+  },
+  {
+    "trial": 1,
+    "case": "valid_emoji",
+    "input": {
+      "text": "I finally finished my project today! I'm glad it's over \ud83d\ude02",
+      "creator_id": "capstone_85f5c329cee54cc5b08b1ed703301457"
+    },
+    "status_code": 200,
+    "output": {
+      "confidence": 0.536,
+      "content_id": "85cba560-eb3a-483e-b582-00eee1903a0a",
+      "guess": "unsure",
+      "label": "This text shows a mix of human and AI writing patterns, so the result is inconclusive.",
+      "model_score": 0.5491,
+      "style_score": 0.5229
+    },
+    "request_id": "f5d8f6ca06bd4c3ea620e674db16b515",
+    "client_duration_ms": 21.47,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.103278+00:00",
+      "request_id": "f5d8f6ca06bd4c3ea620e674db16b515",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"I finally finished my project today! I'm glad it's over \\ud83d\\ude02\", \"creator_id\": \"capstone_85f5c329cee54cc5b08b1ed703301457\"}",
+      "input_truncated": false,
+      "output": {
+        "confidence": 0.536,
+        "content_id": "85cba560-eb3a-483e-b582-00eee1903a0a",
+        "guess": "unsure",
+        "label": "This text shows a mix of human and AI writing patterns, so the result is inconclusive.",
+        "model_score": 0.5491,
+        "style_score": 0.5229
+      },
+      "status_code": 200,
+      "duration_ms": 20.107,
+      "cpu_seconds": 0.028475,
+      "detector_called": true
+    }
+  },
+  {
+    "trial": 1,
+    "case": "valid_multiline",
+    "input": {
+      "text": "Today was a busy day.\nI had two classes and a meeting.",
+      "creator_id": "capstone_4a13c0a1177f4fdfa32969b65eebc938"
+    },
+    "status_code": 200,
+    "output": {
+      "confidence": 0.6103,
+      "content_id": "7c27a874-2ecb-49d1-a16e-9d938cb99fc4",
+      "guess": "unsure",
+      "label": "This text shows a mix of human and AI writing patterns, so the result is inconclusive.",
+      "model_score": 0.6349,
+      "style_score": 0.5857
+    },
+    "request_id": "1c657ade7af7430b9fbf401ca0a0247f",
+    "client_duration_ms": 18.407,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.124566+00:00",
+      "request_id": "1c657ade7af7430b9fbf401ca0a0247f",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"Today was a busy day.\\nI had two classes and a meeting.\", \"creator_id\": \"capstone_4a13c0a1177f4fdfa32969b65eebc938\"}",
+      "input_truncated": false,
+      "output": {
+        "confidence": 0.6103,
+        "content_id": "7c27a874-2ecb-49d1-a16e-9d938cb99fc4",
+        "guess": "unsure",
+        "label": "This text shows a mix of human and AI writing patterns, so the result is inconclusive.",
+        "model_score": 0.6349,
+        "style_score": 0.5857
+      },
+      "status_code": 200,
+      "duration_ms": 17.266,
+      "cpu_seconds": 0.019698,
+      "detector_called": true
+    }
+  },
+  {
+    "trial": 2,
+    "case": "punctuation",
+    "input": {
+      "text": "!!!!!!!!!!!!!",
+      "creator_id": "capstone_cd207fe6c68248d8a69ed088f7987745"
+    },
+    "status_code": 400,
+    "output": {
+      "error": "Text is unsuitable for analysis.",
+      "reason": "no_alphabetic_characters"
+    },
+    "request_id": "0f6bc4f1962e478b979f673b4b6fc16e",
+    "client_duration_ms": 1.341,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.143051+00:00",
+      "request_id": "0f6bc4f1962e478b979f673b4b6fc16e",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"!!!!!!!!!!!!!\", \"creator_id\": \"capstone_cd207fe6c68248d8a69ed088f7987745\"}",
+      "input_truncated": false,
+      "output": {
+        "error": "Text is unsuitable for analysis.",
+        "reason": "no_alphabetic_characters"
+      },
+      "status_code": 400,
+      "duration_ms": 0.281,
+      "cpu_seconds": 0.000283,
+      "detector_called": false
+    }
+  },
+  {
+    "trial": 2,
+    "case": "emoji_only",
+    "input": {
+      "text": "\ud83d\ude02\ud83d\ude02\ud83d\ude02\ud83d\ude02\ud83d\ude02\ud83d\ude02\ud83d\ude02\ud83d\ude02",
+      "creator_id": "capstone_fa3ce42136c54821b111be8feaf3c34e"
+    },
+    "status_code": 400,
+    "output": {
+      "error": "Text is unsuitable for analysis.",
+      "reason": "no_alphabetic_characters"
+    },
+    "request_id": "31aef05400ef4d51991081fc3831a803",
+    "client_duration_ms": 0.968,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.144178+00:00",
+      "request_id": "31aef05400ef4d51991081fc3831a803",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"\\ud83d\\ude02\\ud83d\\ude02\\ud83d\\ude02\\ud83d\\ude02\\ud83d\\ude02\\ud83d\\ude02\\ud83d\\ude02\\ud83d\\ude02\", \"creator_id\": \"capstone_fa3ce42136c54821b111be8feaf3c34e\"}",
+      "input_truncated": false,
+      "output": {
+        "error": "Text is unsuitable for analysis.",
+        "reason": "no_alphabetic_characters"
+      },
+      "status_code": 400,
+      "duration_ms": 0.173,
+      "cpu_seconds": 0.000162,
+      "detector_called": false
+    }
+  },
+  {
+    "trial": 2,
+    "case": "numbers_only",
+    "input": {
+      "text": "123456789012345",
+      "creator_id": "capstone_6954f69504ba4fbd9f690babcb030cd5"
+    },
+    "status_code": 400,
+    "output": {
+      "error": "Text is unsuitable for analysis.",
+      "reason": "no_alphabetic_characters"
+    },
+    "request_id": "09e29e38fe0d4be4a1afe2a5cef5a39a",
+    "client_duration_ms": 0.981,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.145186+00:00",
+      "request_id": "09e29e38fe0d4be4a1afe2a5cef5a39a",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"123456789012345\", \"creator_id\": \"capstone_6954f69504ba4fbd9f690babcb030cd5\"}",
+      "input_truncated": false,
+      "output": {
+        "error": "Text is unsuitable for analysis.",
+        "reason": "no_alphabetic_characters"
+      },
+      "status_code": 400,
+      "duration_ms": 0.168,
+      "cpu_seconds": 0.000169,
+      "detector_called": false
+    }
+  },
+  {
+    "trial": 2,
+    "case": "control_characters",
+    "input": {
+      "text": "Hello\u0000this is a test.",
+      "creator_id": "capstone_48771bf357b347b6a0b066fcc0233bc3"
+    },
+    "status_code": 400,
+    "output": {
+      "error": "Text is unsuitable for analysis.",
+      "reason": "invalid_control_characters"
+    },
+    "request_id": "a669d756798649fdb2ee9fe93f06c22f",
+    "client_duration_ms": 0.883,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.146104+00:00",
+      "request_id": "a669d756798649fdb2ee9fe93f06c22f",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"Hello\\u0000this is a test.\", \"creator_id\": \"capstone_48771bf357b347b6a0b066fcc0233bc3\"}",
+      "input_truncated": false,
+      "output": {
+        "error": "Text is unsuitable for analysis.",
+        "reason": "invalid_control_characters"
+      },
+      "status_code": 400,
+      "duration_ms": 0.137,
+      "cpu_seconds": 0.000137,
+      "detector_called": false
+    }
+  },
+  {
+    "trial": 2,
+    "case": "repetitive_characters",
+    "input": {
+      "text": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "creator_id": "capstone_8232dd81248e46ff8ae50ff1966a70cf"
+    },
+    "status_code": 400,
+    "output": {
+      "error": "Text is unsuitable for analysis.",
+      "reason": "repetitive_text"
+    },
+    "request_id": "cb2b0a226ee242b099ffe39daf60454e",
+    "client_duration_ms": 0.83,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.146965+00:00",
+      "request_id": "cb2b0a226ee242b099ffe39daf60454e",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"creator_id\": \"capstone_8232dd81248e46ff8ae50ff1966a70cf\"}",
+      "input_truncated": false,
+      "output": {
+        "error": "Text is unsuitable for analysis.",
+        "reason": "repetitive_text"
+      },
+      "status_code": 400,
+      "duration_ms": 0.134,
+      "cpu_seconds": 0.000135,
+      "detector_called": false
+    }
+  },
+  {
+    "trial": 2,
+    "case": "repetitive_words",
+    "input": {
+      "text": "hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello ",
+      "creator_id": "capstone_65305ab44650425d914df89124674a6a"
+    },
+    "status_code": 400,
+    "output": {
+      "error": "Text is unsuitable for analysis.",
+      "reason": "repetitive_text"
+    },
+    "request_id": "aecd8f6b36a64f0f95edd00cf4d85197",
+    "client_duration_ms": 0.877,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.147862+00:00",
+      "request_id": "aecd8f6b36a64f0f95edd00cf4d85197",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello \", \"creator_id\": \"capstone_65305ab44650425d914df89124674a6a\"}",
+      "input_truncated": false,
+      "output": {
+        "error": "Text is unsuitable for analysis.",
+        "reason": "repetitive_text"
+      },
+      "status_code": 400,
+      "duration_ms": 0.146,
+      "cpu_seconds": 0.000147,
+      "detector_called": false
+    }
+  },
+  {
+    "trial": 2,
+    "case": "empty",
+    "input": {
+      "text": "",
+      "creator_id": "capstone_a71fe32cc500490bb2b5aef2d1b00d29"
+    },
+    "status_code": 400,
+    "output": {
+      "error": "Valid text is required."
+    },
+    "request_id": "e2016f982ead426b95215a41e62fde01",
+    "client_duration_ms": 0.809,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.148721+00:00",
+      "request_id": "e2016f982ead426b95215a41e62fde01",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"\", \"creator_id\": \"capstone_a71fe32cc500490bb2b5aef2d1b00d29\"}",
+      "input_truncated": false,
+      "output": {
+        "error": "Valid text is required."
+      },
+      "status_code": 400,
+      "duration_ms": 0.118,
+      "cpu_seconds": 0.000118,
+      "detector_called": false
+    }
+  },
+  {
+    "trial": 2,
+    "case": "whitespace",
+    "input": {
+      "text": "   ",
+      "creator_id": "capstone_b62dfd8213184ea19026fd963df2846e"
+    },
+    "status_code": 400,
+    "output": {
+      "error": "Valid text is required."
+    },
+    "request_id": "5a4a68beaf7e4a58883c436dda86a6af",
+    "client_duration_ms": 0.764,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.149517+00:00",
+      "request_id": "5a4a68beaf7e4a58883c436dda86a6af",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"   \", \"creator_id\": \"capstone_b62dfd8213184ea19026fd963df2846e\"}",
+      "input_truncated": false,
+      "output": {
+        "error": "Valid text is required."
+      },
+      "status_code": 400,
+      "duration_ms": 0.122,
+      "cpu_seconds": 0.000123,
+      "detector_called": false
+    }
+  },
+  {
+    "trial": 2,
+    "case": "valid_plain",
+    "input": {
+      "text": "I went to the library after class today. It was quiet, so I finished my homework.",
+      "creator_id": "capstone_432a4b231a404718a1ed48f2e9ea2a0c"
+    },
+    "status_code": 200,
+    "output": {
+      "confidence": 0.7961,
+      "content_id": "d7947a40-20e6-432e-9b65-5878d1dde866",
+      "guess": "ai",
+      "label": "This text appears to be AI-generated.",
+      "model_score": 0.6921,
+      "style_score": 0.9
+    },
+    "request_id": "81b73da6ff6e4c009acc64fb183fc4e8",
+    "client_duration_ms": 22.092,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.150294+00:00",
+      "request_id": "81b73da6ff6e4c009acc64fb183fc4e8",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"I went to the library after class today. It was quiet, so I finished my homework.\", \"creator_id\": \"capstone_432a4b231a404718a1ed48f2e9ea2a0c\"}",
+      "input_truncated": false,
+      "output": {
+        "confidence": 0.7961,
+        "content_id": "d7947a40-20e6-432e-9b65-5878d1dde866",
+        "guess": "ai",
+        "label": "This text appears to be AI-generated.",
+        "model_score": 0.6921,
+        "style_score": 0.9
+      },
+      "status_code": 200,
+      "duration_ms": 21.249,
+      "cpu_seconds": 0.026661,
+      "detector_called": true
+    }
+  },
+  {
+    "trial": 2,
+    "case": "valid_emoji",
+    "input": {
+      "text": "I finally finished my project today! I'm glad it's over \ud83d\ude02",
+      "creator_id": "capstone_68871e6530724f9989f69b4b873bb0e9"
+    },
+    "status_code": 200,
+    "output": {
+      "confidence": 0.536,
+      "content_id": "667e395e-c10d-430a-9a69-525d9dad71e7",
+      "guess": "unsure",
+      "label": "This text shows a mix of human and AI writing patterns, so the result is inconclusive.",
+      "model_score": 0.5491,
+      "style_score": 0.5229
+    },
+    "request_id": "1b6a550bdae54c3f96b2af4cc56c4a68",
+    "client_duration_ms": 18.02,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.172751+00:00",
+      "request_id": "1b6a550bdae54c3f96b2af4cc56c4a68",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"I finally finished my project today! I'm glad it's over \\ud83d\\ude02\", \"creator_id\": \"capstone_68871e6530724f9989f69b4b873bb0e9\"}",
+      "input_truncated": false,
+      "output": {
+        "confidence": 0.536,
+        "content_id": "667e395e-c10d-430a-9a69-525d9dad71e7",
+        "guess": "unsure",
+        "label": "This text shows a mix of human and AI writing patterns, so the result is inconclusive.",
+        "model_score": 0.5491,
+        "style_score": 0.5229
+      },
+      "status_code": 200,
+      "duration_ms": 16.869,
+      "cpu_seconds": 0.019175,
+      "detector_called": true
+    }
+  },
+  {
+    "trial": 2,
+    "case": "valid_multiline",
+    "input": {
+      "text": "Today was a busy day.\nI had two classes and a meeting.",
+      "creator_id": "capstone_bbd3c26667f541cc924ea87b5397d622"
+    },
+    "status_code": 200,
+    "output": {
+      "confidence": 0.6103,
+      "content_id": "74be8325-2881-46a1-a069-99193663bedf",
+      "guess": "unsure",
+      "label": "This text shows a mix of human and AI writing patterns, so the result is inconclusive.",
+      "model_score": 0.6349,
+      "style_score": 0.5857
+    },
+    "request_id": "701f7eaa443a4ae68681cff8659a2a81",
+    "client_duration_ms": 18.379,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.190801+00:00",
+      "request_id": "701f7eaa443a4ae68681cff8659a2a81",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"Today was a busy day.\\nI had two classes and a meeting.\", \"creator_id\": \"capstone_bbd3c26667f541cc924ea87b5397d622\"}",
+      "input_truncated": false,
+      "output": {
+        "confidence": 0.6103,
+        "content_id": "74be8325-2881-46a1-a069-99193663bedf",
+        "guess": "unsure",
+        "label": "This text shows a mix of human and AI writing patterns, so the result is inconclusive.",
+        "model_score": 0.6349,
+        "style_score": 0.5857
+      },
+      "status_code": 200,
+      "duration_ms": 17.148,
+      "cpu_seconds": 0.019565,
+      "detector_called": true
+    }
+  },
+  {
+    "trial": 3,
+    "case": "punctuation",
+    "input": {
+      "text": "!!!!!!!!!!!!!",
+      "creator_id": "capstone_6a65c065b660419dbce026348ea1a783"
+    },
+    "status_code": 400,
+    "output": {
+      "error": "Text is unsuitable for analysis.",
+      "reason": "no_alphabetic_characters"
+    },
+    "request_id": "ac73794890a845619b0049798464e485",
+    "client_duration_ms": 1.292,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.209228+00:00",
+      "request_id": "ac73794890a845619b0049798464e485",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"!!!!!!!!!!!!!\", \"creator_id\": \"capstone_6a65c065b660419dbce026348ea1a783\"}",
+      "input_truncated": false,
+      "output": {
+        "error": "Text is unsuitable for analysis.",
+        "reason": "no_alphabetic_characters"
+      },
+      "status_code": 400,
+      "duration_ms": 0.275,
+      "cpu_seconds": 0.000278,
+      "detector_called": false
+    }
+  },
+  {
+    "trial": 3,
+    "case": "emoji_only",
+    "input": {
+      "text": "\ud83d\ude02\ud83d\ude02\ud83d\ude02\ud83d\ude02\ud83d\ude02\ud83d\ude02\ud83d\ude02\ud83d\ude02",
+      "creator_id": "capstone_10408116d47a42ec8ebc6d5b5717cad5"
+    },
+    "status_code": 400,
+    "output": {
+      "error": "Text is unsuitable for analysis.",
+      "reason": "no_alphabetic_characters"
+    },
+    "request_id": "569ee2c23e7740a39871fbf9c6706fe0",
+    "client_duration_ms": 0.953,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.210344+00:00",
+      "request_id": "569ee2c23e7740a39871fbf9c6706fe0",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"\\ud83d\\ude02\\ud83d\\ude02\\ud83d\\ude02\\ud83d\\ude02\\ud83d\\ude02\\ud83d\\ude02\\ud83d\\ude02\\ud83d\\ude02\", \"creator_id\": \"capstone_10408116d47a42ec8ebc6d5b5717cad5\"}",
+      "input_truncated": false,
+      "output": {
+        "error": "Text is unsuitable for analysis.",
+        "reason": "no_alphabetic_characters"
+      },
+      "status_code": 400,
+      "duration_ms": 0.158,
+      "cpu_seconds": 0.000149,
+      "detector_called": false
+    }
+  },
+  {
+    "trial": 3,
+    "case": "numbers_only",
+    "input": {
+      "text": "123456789012345",
+      "creator_id": "capstone_a3d3f1f6e70d4994ac11cd39823d0f41"
+    },
+    "status_code": 400,
+    "output": {
+      "error": "Text is unsuitable for analysis.",
+      "reason": "no_alphabetic_characters"
+    },
+    "request_id": "8f37fd5a51654482ba6a0ed5715d7a63",
+    "client_duration_ms": 0.81,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.211200+00:00",
+      "request_id": "8f37fd5a51654482ba6a0ed5715d7a63",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"123456789012345\", \"creator_id\": \"capstone_a3d3f1f6e70d4994ac11cd39823d0f41\"}",
+      "input_truncated": false,
+      "output": {
+        "error": "Text is unsuitable for analysis.",
+        "reason": "no_alphabetic_characters"
+      },
+      "status_code": 400,
+      "duration_ms": 0.127,
+      "cpu_seconds": 0.000128,
+      "detector_called": false
+    }
+  },
+  {
+    "trial": 3,
+    "case": "control_characters",
+    "input": {
+      "text": "Hello\u0000this is a test.",
+      "creator_id": "capstone_409762a9e6714b95a3ce5be1bc5807f8"
+    },
+    "status_code": 400,
+    "output": {
+      "error": "Text is unsuitable for analysis.",
+      "reason": "invalid_control_characters"
+    },
+    "request_id": "ee894b078d234da1a6324fe7e17c00b4",
+    "client_duration_ms": 0.823,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.212049+00:00",
+      "request_id": "ee894b078d234da1a6324fe7e17c00b4",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"Hello\\u0000this is a test.\", \"creator_id\": \"capstone_409762a9e6714b95a3ce5be1bc5807f8\"}",
+      "input_truncated": false,
+      "output": {
+        "error": "Text is unsuitable for analysis.",
+        "reason": "invalid_control_characters"
+      },
+      "status_code": 400,
+      "duration_ms": 0.126,
+      "cpu_seconds": 0.000126,
+      "detector_called": false
+    }
+  },
+  {
+    "trial": 3,
+    "case": "repetitive_characters",
+    "input": {
+      "text": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "creator_id": "capstone_b226256bea4f47ec83e1a3ae5877caab"
+    },
+    "status_code": 400,
+    "output": {
+      "error": "Text is unsuitable for analysis.",
+      "reason": "repetitive_text"
+    },
+    "request_id": "dd4943c5f5b64ecc9a4df786e2a8736d",
+    "client_duration_ms": 0.785,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.212854+00:00",
+      "request_id": "dd4943c5f5b64ecc9a4df786e2a8736d",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"creator_id\": \"capstone_b226256bea4f47ec83e1a3ae5877caab\"}",
+      "input_truncated": false,
+      "output": {
+        "error": "Text is unsuitable for analysis.",
+        "reason": "repetitive_text"
+      },
+      "status_code": 400,
+      "duration_ms": 0.124,
+      "cpu_seconds": 0.000124,
+      "detector_called": false
+    }
+  },
+  {
+    "trial": 3,
+    "case": "repetitive_words",
+    "input": {
+      "text": "hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello ",
+      "creator_id": "capstone_38f359731eea4eca89276b859bdb5f7c"
+    },
+    "status_code": 400,
+    "output": {
+      "error": "Text is unsuitable for analysis.",
+      "reason": "repetitive_text"
+    },
+    "request_id": "d00fbb745e3d4580b54abadec222e8e6",
+    "client_duration_ms": 0.798,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.213647+00:00",
+      "request_id": "d00fbb745e3d4580b54abadec222e8e6",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello \", \"creator_id\": \"capstone_38f359731eea4eca89276b859bdb5f7c\"}",
+      "input_truncated": false,
+      "output": {
+        "error": "Text is unsuitable for analysis.",
+        "reason": "repetitive_text"
+      },
+      "status_code": 400,
+      "duration_ms": 0.143,
+      "cpu_seconds": 0.000143,
+      "detector_called": false
+    }
+  },
+  {
+    "trial": 3,
+    "case": "empty",
+    "input": {
+      "text": "",
+      "creator_id": "capstone_55719c96cd18490493402a5912951721"
+    },
+    "status_code": 400,
+    "output": {
+      "error": "Valid text is required."
+    },
+    "request_id": "2c44387826fd465891608c3975e8e5b2",
+    "client_duration_ms": 0.748,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.214444+00:00",
+      "request_id": "2c44387826fd465891608c3975e8e5b2",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"\", \"creator_id\": \"capstone_55719c96cd18490493402a5912951721\"}",
+      "input_truncated": false,
+      "output": {
+        "error": "Valid text is required."
+      },
+      "status_code": 400,
+      "duration_ms": 0.114,
+      "cpu_seconds": 0.000115,
+      "detector_called": false
+    }
+  },
+  {
+    "trial": 3,
+    "case": "whitespace",
+    "input": {
+      "text": "   ",
+      "creator_id": "capstone_b59b6006656647bda76785a9196520e6"
+    },
+    "status_code": 400,
+    "output": {
+      "error": "Valid text is required."
+    },
+    "request_id": "b14bd565163d4cc4b3b7df45f5601ea5",
+    "client_duration_ms": 0.784,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.215227+00:00",
+      "request_id": "b14bd565163d4cc4b3b7df45f5601ea5",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"   \", \"creator_id\": \"capstone_b59b6006656647bda76785a9196520e6\"}",
+      "input_truncated": false,
+      "output": {
+        "error": "Valid text is required."
+      },
+      "status_code": 400,
+      "duration_ms": 0.106,
+      "cpu_seconds": 0.000106,
+      "detector_called": false
+    }
+  },
+  {
+    "trial": 3,
+    "case": "valid_plain",
+    "input": {
+      "text": "I went to the library after class today. It was quiet, so I finished my homework.",
+      "creator_id": "capstone_3d267a0b2f1949c7a712f2260631a82a"
+    },
+    "status_code": 200,
+    "output": {
+      "confidence": 0.7961,
+      "content_id": "99b832da-23d1-4d49-8fb3-7c0112762f34",
+      "guess": "ai",
+      "label": "This text appears to be AI-generated.",
+      "model_score": 0.6921,
+      "style_score": 0.9
+    },
+    "request_id": "9acaa7b2198e4afdbd00cef5172749b7",
+    "client_duration_ms": 21.106,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.216017+00:00",
+      "request_id": "9acaa7b2198e4afdbd00cef5172749b7",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"I went to the library after class today. It was quiet, so I finished my homework.\", \"creator_id\": \"capstone_3d267a0b2f1949c7a712f2260631a82a\"}",
+      "input_truncated": false,
+      "output": {
+        "confidence": 0.7961,
+        "content_id": "99b832da-23d1-4d49-8fb3-7c0112762f34",
+        "guess": "ai",
+        "label": "This text appears to be AI-generated.",
+        "model_score": 0.6921,
+        "style_score": 0.9
+      },
+      "status_code": 200,
+      "duration_ms": 20.248,
+      "cpu_seconds": 0.024964,
+      "detector_called": true
+    }
+  },
+  {
+    "trial": 3,
+    "case": "valid_emoji",
+    "input": {
+      "text": "I finally finished my project today! I'm glad it's over \ud83d\ude02",
+      "creator_id": "capstone_93507dbfe2134ebdba1304b0cfc55681"
+    },
+    "status_code": 200,
+    "output": {
+      "confidence": 0.536,
+      "content_id": "35788e5a-1ff7-4083-8c8a-ffaa6fa3c363",
+      "guess": "unsure",
+      "label": "This text shows a mix of human and AI writing patterns, so the result is inconclusive.",
+      "model_score": 0.5491,
+      "style_score": 0.5229
+    },
+    "request_id": "496c13ce670748459b1b2df72ecbe0cf",
+    "client_duration_ms": 17.304,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.237511+00:00",
+      "request_id": "496c13ce670748459b1b2df72ecbe0cf",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"I finally finished my project today! I'm glad it's over \\ud83d\\ude02\", \"creator_id\": \"capstone_93507dbfe2134ebdba1304b0cfc55681\"}",
+      "input_truncated": false,
+      "output": {
+        "confidence": 0.536,
+        "content_id": "35788e5a-1ff7-4083-8c8a-ffaa6fa3c363",
+        "guess": "unsure",
+        "label": "This text shows a mix of human and AI writing patterns, so the result is inconclusive.",
+        "model_score": 0.5491,
+        "style_score": 0.5229
+      },
+      "status_code": 200,
+      "duration_ms": 16.127,
+      "cpu_seconds": 0.018713,
+      "detector_called": true
+    }
+  },
+  {
+    "trial": 3,
+    "case": "valid_multiline",
+    "input": {
+      "text": "Today was a busy day.\nI had two classes and a meeting.",
+      "creator_id": "capstone_1e6fa8395db54f54bbf0a73792f14390"
+    },
+    "status_code": 200,
+    "output": {
+      "confidence": 0.6103,
+      "content_id": "02f97234-995c-4366-a469-eeb9da46a941",
+      "guess": "unsure",
+      "label": "This text shows a mix of human and AI writing patterns, so the result is inconclusive.",
+      "model_score": 0.6349,
+      "style_score": 0.5857
+    },
+    "request_id": "eef15fe07866474fb882ded901fa2eb7",
+    "client_duration_ms": 17.463,
+    "log": {
+      "timestamp": "2026-11-19T00:21:22.254783+00:00",
+      "request_id": "eef15fe07866474fb882ded901fa2eb7",
+      "endpoint": "/submit",
+      "input": "{\"text\": \"Today was a busy day.\\nI had two classes and a meeting.\", \"creator_id\": \"capstone_1e6fa8395db54f54bbf0a73792f14390\"}",
+      "input_truncated": false,
+      "output": {
+        "confidence": 0.6103,
+        "content_id": "02f97234-995c-4366-a469-eeb9da46a941",
+        "guess": "unsure",
+        "label": "This text shows a mix of human and AI writing patterns, so the result is inconclusive.",
+        "model_score": 0.6349,
+        "style_score": 0.5857
+      },
+      "status_code": 200,
+      "duration_ms": 16.319,
+      "cpu_seconds": 0.018939,
+      "detector_called": true
+    }
+  }
+]
